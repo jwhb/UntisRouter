@@ -1,0 +1,31 @@
+body {
+  padding: 0.5em;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#container {
+  text-align: center;
+}
+
+.vplan table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vplan_th td {
+  font-weight: bold;
+}
+
+.vplan td, .vplan th {
+  padding: 2px 5px;
+}
+
+.vplan_nav {
+  padding: 0.2em;
+  border: 2px solid #3399ff;
+  border-radius: 2px;
+}
+
+.vplan_nav a, .vplan_nav a:visited {
+  color: #3399ff;
+}
