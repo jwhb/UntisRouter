@@ -52,6 +52,8 @@ class Router {
     $template = 'invalid_page';
     $vars = array();
     $vars['baseurl'] = $this->baseurl;
+
+    $grades = Config::$grades;
     
     $grade;
     $day;
@@ -62,7 +64,6 @@ class Router {
     	case 0:
     	  $title = 'Vertretungsplan &Uuml;bersicht';
     	  $template = 'vplan_overview';
-    	  include('assets/grades.php');
     	  $vars['grades'] = $grades;
     	  break;
     	case 1:
