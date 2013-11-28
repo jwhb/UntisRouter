@@ -68,9 +68,14 @@ class Router {
     	  break;
     	case 1:
     	  $grade = strtoupper($params[0]);
-    	  $title = "$grade - Vertretungsplan";
-    	  $template = 'vplan_grade';
-    	  $vars['grade'] = $grade;
+    	  if(in_array($grade, $grades)){
+          	  $title = "$grade - Vertretungsplan";
+          	  $template = 'vplan_grade';
+    	  }else{
+    	    $title = "Unbekannte Stufe - Vertretungsplan";
+    	    $template = 'vplan_grade_notfound';
+    	  }
+          $vars['grade'] = $grade;
     	  break;
     	case 2:
     	  $grade = $params[0];
