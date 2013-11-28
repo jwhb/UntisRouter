@@ -1,7 +1,7 @@
 <div class="pure-menu pure-menu-open pure-menu-horizontal">
     <ul>
         <li><a href="{$baseurl}">Stufen</a></li>
-        {if="$grade"}<li><a href="{$baseurl}{$grade}">{$grade}</a></li>{/if}
+        {if="$grade"}<li {if="!isset($vplan)"}class="pure-menu-selected"{/if}><a href="{$baseurl}{$grade}">{$grade}</a></li>{/if}
         {if="isset($vplan)"}<li class="pure-menu-selected"><a href="#">{$vplan->date_text}</a></li>{/if}
     </ul>
 </div>
