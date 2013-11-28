@@ -67,7 +67,7 @@ class Router {
     	  break;
     	case 1:
     	  $grade = strtoupper($params[0]);
-    	  $title = "Vertretungsplan $grade";
+    	  $title = "$grade - Vertretungsplan";
     	  $template = 'vplan_grade';
     	  $vars['grade'] = $grade;
     	  break;

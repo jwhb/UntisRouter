@@ -1,7 +1,10 @@
-<span class="vplan_nav">
-    <a href="{$baseurl}">Stufen</a> &gt;
-    <a href="{$baseurl}{$vplan->grade}">{$vplan->grade}</a> &gt;
-    <a href="{$baseurl}{$vplan->local_url}">{$vplan->date_text}</a>
-</span>
-
-<h1>{$vplan->grade} ({$vplan->date_text_full})</h1>
+<div class="pure-menu pure-menu-open pure-menu-horizontal">
+    <ul>
+        <li><a href="{$baseurl}">Stufen</a></li>
+        {if="$grade"}<li><a href="{$baseurl}{$grade}">{$grade}</a></li>{/if}
+        {if="isset($vplan)"}<li class="pure-menu-selected"><a href="#">{$vplan->date_text}</a></li>{/if}
+    </ul>
+</div>
+{if="isset($vplan)"}
+<h1 class="vplan_header">{$vplan->grade} ({$vplan->date_text_full})</h1>
+{/if}

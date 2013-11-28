@@ -39,7 +39,7 @@ class Storage {
     }else{
       $vp_table->firstChild->setAttribute('class', 'vplan_th');
     }
-    $table_html = preg_replace("/<[\/]{0,1}(font)[^><]*>/", '', $vp_table->ownerDocument->saveXML($vp_table));
+    $table_html = preg_replace("/<[\/]{0,1}(font)[^><]*>/", '', $this->getInnerHtml($vp_table));
     $table_html = str_replace('<td align="center"/>', '<td align="center"></td>', $table_html);
     return($table_html);
   }
