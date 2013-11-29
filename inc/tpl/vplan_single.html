@@ -1,4 +1,4 @@
-{include="vplan_header"}
+{if="isset($vplan->html)"}{include="vplan_header"}
 <table class="pure-table pure-table-bordered vplan">
 {$vplan->html}
-</table>
+</table>{else}{include="vplan_notfound"}{/if}
