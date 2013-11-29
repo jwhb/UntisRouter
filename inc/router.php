@@ -23,12 +23,32 @@ class Router {
     $this->dispatch(substr($request, strlen($this->dir)));
   }
   
+  public function redirect($url, $html_redir = true, $exit = true){
+    if($html_redir){?>
+      <!DOCTYPE html>
+      <html>
+      <header>
+        <meta http-equiv="refresh" content="0; url=<?php echo $url; ?>">
+      </header>    
+      </html><?php
+    }else{
+      header('HTTP/1.1 302 Moved Temporarily');
+      header('Location: ' . $url);
+    }
+    if($exit) exit();
+  }
+  
   public function makeLocalUrl($grade, $date){
-    str_replace(
+    return($this->baseurl . str_replace(
       array('{g}', '{d}', '{m}', '{y}'),
       array($grade, $date->format('d'), $date->format('m'), $date->format('Y')),
       '{g}/{d}/{m}/{y}'
-    );
+    ));
+  }
+  
+  public function makeDate($d, $m, $y){
+    $date = new DateTime("$y-$m-$d");
+    return $date;
   }
   
   /**
@@ -53,7 +73,9 @@ class Router {
     $vars = array();
     $vars['baseurl'] = $this->baseurl;
 
+    $today = new DateTime('today');
     $grades = Config::$grades;
+    $redirect = false;
     
     $grade;
     $day;
@@ -78,7 +100,8 @@ class Router {
           $vars['grade'] = $grade;
     	  break;
     	case 2:
-    	  $grade = $params[0];
+    	  $grade = strtoupper($params[0]);
+      	  $vars['grade'] = $grade;
     	  if($params[1] == 'latest'){
             $template = 'vplan_single';
           	$title = "$grade - Vertretungsplan";
@@ -97,16 +120,52 @@ class Router {
       	    $title = "$grade - $date_text - Vertretungsplan";
         	
         	if(!$vplan->error_code){
-      	      $vars['grade'] = $grade;
       	      $vars['date_text'] = $date_text;
         	}else{
               $template = 'vplan_notfound';
         	}
+    	    break;
+    	  }elseif(is_numeric($params[1])){
+    	    $redirect = true;
+    	    $params[2] = $today->format('m');
+    	    $n_params = 3;
+    	  }
+    	case 3:
+          $vars['grade'] = $grade;
+    	  $redirect = true;
+    	  $params[3] = $today->format('Y');
+    	  $n_params = 4;
+    	case 4:
+    	  $grade = strtoupper($params[0]);
+          $template = 'vplan_single';
+          $title = "$grade - Vertretungsplan";
+    	  $date = $this->makeDate($params[1], $params[2], $params[3]);
+    	  $vplan = $this->storage->getPlan($grade, $date);
+    	  
+    	  if(!$vplan || is_numeric($vplan)){
+    	    $error_code = $vplan;
+    	    $vplan = new VPlan($this->storage->getLatestPlan($grade, true), $grade);
+    	    $vplan->setErrorCode($error_code);
+    	  }
+    	   
+    	  $vplan->local_url = $this->makeLocalUrl($grade, $vplan->date);
+    	  $vars['vplan'] = $vplan;
+    	  $date_text = $vplan->date_text;
+    	  $title = "$grade - $date_text - Vertretungsplan";
+    	  if(!$vplan->error_code){
+    	    $vars['grade'] = $grade;
+    	    $vars['date_text'] = $date_text;
+    	  }else{
+    	    $template = 'vplan_notfound';
     	  }
     	  break;
     	default:
     	  break;
     }
+    if($redirect){
+      $this->redirect($this->makeLocalUrl(strtoupper($params[0]), $this->makeDate($params[1], $params[2], $params[3])));
+    }
+    
     
     //Draw page
     $tpl->assign('title', $title);

@@ -31,9 +31,8 @@ class Storage {
         break;
       }
     }
-
-    $vp_table->setAttribute('border', 0);
     if(!$vp_table) return $html;
+    $vp_table->setAttribute('border', 0);
     if($remove_header){
       $vp_table->removeChild($vp_table->firstChild);
     }else{
