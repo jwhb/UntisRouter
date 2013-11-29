@@ -19,3 +19,9 @@ body {
 .vplan_th td {
   font-weight: bold;
 }
+
+.vplan_overview_button {
+  font-size: 110%;
+  min-width: 30px;
+  margin: 2px;
+}
