@@ -98,6 +98,7 @@ class Router {
     	    $template = 'vplan_grade_notfound';
     	  }
           $vars['grade'] = $grade;
+          $vars['dates'] = $this->getRelevantDates($grade);
     	  break;
     	case 2:
     	  $grade = strtoupper($params[0]);
@@ -173,4 +174,29 @@ class Router {
     $tpl->draw($template);
   }
   
+  public function getRelevantDates($grade){
+    $format = Config::$page_date_format_full;
+    $dates = array();
+    
+    $today = new DateTime('today');
+    
+    $dates[] = array(
+      'highlight' => true,
+      'date' => $today,
+      'text' => strftime($format, $today->getTimestamp()),
+      'url' => $this->makeLocalUrl($grade, $today)
+    );
+
+    $nextday = new DateTime('tomorrow');
+    if($nextday->format('N')>5){
+      $nextday = new DateTime('next monday');
+    }
+    $dates[] = array(
+      'highlight' => false,
+      'date' => $nextday,
+      'text' => strftime($format, $nextday->getTimestamp()),
+      'url' => $this->makeLocalUrl($grade, $nextday)
+    );
+    return($dates);
+  }
 }

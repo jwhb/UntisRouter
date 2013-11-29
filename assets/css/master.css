@@ -25,3 +25,8 @@ body {
   min-width: 30px;
   margin: 2px;
 }
+
+.grade_overview_button {
+  min-width: 150px;
+  margin: 2px;
+}

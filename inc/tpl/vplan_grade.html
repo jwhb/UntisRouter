@@ -1,3 +1,6 @@
 {include="vplan_header"}
 <h1 class="vplan_header">Stufe {$grade}</h1>
-<a class="pure-button" href="{$baseurl}{$grade}/latest/">Neuster Vertretungsplan</a>
+
+{loop="$dates"}
+<a class="grade_overview_button pure-button{if="$value.highlight"} pure-button-primary{/if}" href="{$value.url}">{$value.text}</a><br>
+{/loop}
