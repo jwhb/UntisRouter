@@ -1,6 +1,6 @@
-Verf&uuml;gbare Vertretungspl&auml;ne:
+<h2>Verf&uuml;gbare Vertretungspl&auml;ne:</h2>
 <p>
 {loop="$grades"}
-<a href="{$baseurl}{$value}">{$value}</a><br>
+<a class="vplan_overview_button pure-button" href="{$baseurl}{$value}">{$value}</a>{if="(($counter+1) % 3) == 0"}<br>{/if} 
 {/loop}
 </p>
