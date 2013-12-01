@@ -27,9 +27,9 @@ class Router {
     if($html_redir){?>
       <!DOCTYPE html>
       <html>
-      <header>
+      <head>
         <meta http-equiv="refresh" content="0; url=<?php echo $url; ?>">
-      </header>    
+      </head>    
       </html><?php
     }else{
       header('HTTP/1.1 302 Moved Temporarily');
