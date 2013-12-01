@@ -16,6 +16,10 @@ body {
   margin-right: auto;
 }
 
+.vplan_error_text {
+  color: #999;
+}
+
 .vplan_th td {
   font-weight: bold;
 }
