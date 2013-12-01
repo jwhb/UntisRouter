@@ -1,7 +1,8 @@
 <?php
 
 use Rain\Tpl;
-require('vendor/autoload.php');
+(@include_once('vendor/autoload.php')) or die('Composer Autoloader not present.
+    Please run <b>composer.phar install</b> in the application\'s directory');
 (@include_once('inc/config.php')) or die('Config file not present. Please rename
     \'<b>config.default.php</b>\' to \'<b>config.php</b>\'.');
 require_once('inc/vplan.php');
