@@ -177,22 +177,27 @@ class Router {
   public function getRelevantDates($grade){
     $format = Config::$page_date_format_full;
     $dates = array();
+    $highlighted = false;
     
     $today = new DateTime('today');
     
-    $dates[] = array(
-      'highlight' => true,
-      'date' => $today,
-      'text' => strftime($format, $today->getTimestamp()),
-      'url' => $this->makeLocalUrl($grade, $today)
-    );
+    if($today->format('N')<6){
+      $dates[] = array(
+        'highlight' => true,
+        'date' => $today,
+        'text' => strftime($format, $today->getTimestamp()),
+        'url' => $this->makeLocalUrl($grade, $today)
+      );
+      $highlighted = true;
+    }
 
     $nextday = new DateTime('tomorrow');
     if($nextday->format('N')>5){
       $nextday = new DateTime('next monday');
     }
+    $hl = (!$highlighted);
     $dates[] = array(
-      'highlight' => false,
+      'highlight' => $hl,
       'date' => $nextday,
       'text' => strftime($format, $nextday->getTimestamp()),
       'url' => $this->makeLocalUrl($grade, $nextday)
