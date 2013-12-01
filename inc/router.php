@@ -77,11 +77,12 @@ class Router {
     $grades = Config::$grades;
     $redirect = false;
     
-    $grade;
+    $grade = '';
     $day;
     $month;
     $year;
     
+    if($n_params > 0) $grade = strtoupper($params[0]);
     switch($n_params){
     	case 0:
     	  $title = 'Vertretungsplan &Uuml;bersicht';
@@ -89,7 +90,6 @@ class Router {
     	  $vars['grades'] = $grades;
     	  break;
     	case 1:
-    	  $grade = strtoupper($params[0]);
     	  if(in_array($grade, $grades)){
           	  $title = "$grade - Vertretungsplan";
           	  $template = 'vplan_grade';
@@ -101,7 +101,6 @@ class Router {
           $vars['dates'] = $this->getRelevantDates($grade);
     	  break;
     	case 2:
-    	  $grade = strtoupper($params[0]);
       	  $vars['grade'] = $grade;
     	  if($params[1] == 'latest'){
             $template = 'vplan_single';
@@ -132,12 +131,10 @@ class Router {
     	    $n_params = 3;
     	  }
     	case 3:
-          $vars['grade'] = $grade;
     	  $redirect = true;
     	  $params[3] = $today->format('Y');
     	  $n_params = 4;
     	case 4:
-    	  $grade = strtoupper($params[0]);
           $template = 'vplan_single';
           $title = "$grade - Vertretungsplan";
     	  $date = $this->makeDate($params[1], $params[2], $params[3]);
@@ -154,7 +151,6 @@ class Router {
     	  $date_text = $vplan->date_text;
     	  $title = "$grade - $date_text - Vertretungsplan";
     	  if(!$vplan->error_code){
-    	    $vars['grade'] = $grade;
     	    $vars['date_text'] = $date_text;
     	  }else{
     	    $template = 'vplan_notfound';
