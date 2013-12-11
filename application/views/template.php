@@ -6,6 +6,7 @@
     <title><?php echo $title; ?> &middot; <?php echo $this->config->item('app_name'); ?></title>
     <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>/assets/css/pure-min.css">
     <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>/assets/css/app.css">
+    <?php echo $this->config->item('tracking', ''); ?>
   </head>
   <body>
     <div id="layout">
