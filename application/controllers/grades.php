@@ -34,8 +34,16 @@ class Grades extends MY_Controller{
   }
   
   public function update($token = ''){
-    $this->load->library('Vplan', array('index' => $this->config->item('vplan_index'), 'single' => $this->config->item('vplan_single')));
-    $this->vplan->updateAll();
+    if($token == $this->config->item('update_token')){
+      $this->load->library('Vplan', array('index' => $this->config->item('vplan_index'), 'single' => $this->config->item('vplan_single')));
+      foreach($this->vplan->updateAll() as $date) print($date . ' ');
+    }elseif(strlen($token) == 0){
+      $this->output->set_status_header('401');
+      exit('No token supplied');
+    }else{
+      $this->output->set_status_header('403');
+      exit('Invalid token');
+    }
   }
   
   public function view($grade, $d, $m, $y){
@@ -49,10 +57,9 @@ class Grades extends MY_Controller{
       $data['dates'] = $this->get_date_neighbors($date);
       if($grade == 'all'){
         $this->set_title('Alle Stufen');
-        $data['substitutions'] = $this->substitutions->get_all();
+        $data['substitutions'] = $this->substitutions->order_by('time')->get_many_by(array('date' => $date->format('Y-m-d')));
         
         $this->template->write_view('content', 'substitutions/list', $data, true);
-        $this->template->render();
       }else{
         $substitutions = $this->substitutions->order_by('time')->get_many_by(array('grade' => $grade, 'date' => $date->format('Y-m-d')));
         if(sizeof($substitutions) > 0){

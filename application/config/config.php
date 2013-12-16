@@ -22,7 +22,7 @@ $config['base_url']	= '';
 |--------------------------------------------------------------------------
 */
 $config['app_name'] = 'UntisReader';
-$config['page_title_prefix'] = 'lol';
+$config['page_title_prefix'] = '';
 $config['page_title_suffix'] = ' &middot; ' . $config['app_name'];
 $config['page_menu'] = array(
     array(
@@ -35,6 +35,7 @@ $config['page_menu'] = array(
 $config['vplan_index'] = 'http://ohg-bensberg.info/WSK_extdata/vplan/{yy}{mm}{dd}/Ver_Kla.htm';
 $config['vplan_single'] = 'http://ohg-bensberg.info/WSK_extdata/vplan/{yy}{mm}{dd}/Ver_Kla_{grade}.htm';
 
+$config['update_token'] = 'Change me!';
 $config['tracking'] = '';
 
 /*
