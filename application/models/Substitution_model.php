@@ -40,5 +40,10 @@ class Substitution_model extends MY_Model {
     if(sizeof($ids) > 0) $this->delete_many($ids);
     return($ids);
   }
+  
+  public function deleteEmpty(){
+    $this->delete_many_by_many(array('time' => '', 'teacher' => ''));
+    print_r($this->db->last_query());
+  }
 
 }

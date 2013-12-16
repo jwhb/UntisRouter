@@ -123,9 +123,25 @@ class Vplan {
   function updateAll(){
     $today = new DateTime('today');
     $today_data = $this->updateDate($today);
+    $today_count = 0;
+    foreach($today_data as $grade){
+      $today_count += sizeof($grade);
+    }
     if($today_data){
       $this->insertData($today_data, $today);
-    }else die('Keine Eintr&auml;ge f&uuml;r ' . $today->format('d.m.Y'));
+    }
+    
+    $tmrw = new DateTime('tomorrow');
+    if($tmrw->format('N') > 5) $tmrw = new DateTime('next monday');
+    $tmrw_data = $this->updateDate($tmrw);
+    $tmrw_count = 0;
+    foreach($tmrw_data as $grade){
+      $tmrw_count += sizeof($grade);
+    }
+    if($tmrw_data){
+      $this->insertData($tmrw_data, $tmrw);
+    }
+    return(array($today_count, $tmrw_count));
   }
   
   function insertData($grades, $date){
@@ -152,6 +168,8 @@ class Vplan {
         }
       }
     }
+    
+    $this->ci->substitutions->deleteEmpty();
   }
   
 }
