@@ -41,6 +41,10 @@
 $route['default_controller'] = 'grades';
 $route['404_override'] = '';
 
+$route['EF'] = "grades/EF";
+$route['Q1'] = "grades/Q1";
+$route['Q2'] = "grades/Q2";
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

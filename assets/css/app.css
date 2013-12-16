@@ -9,6 +9,7 @@
 
 .vp_table th, .vp_table td {
   text-align: center;
+  white-space: nowrap;
 }
 
 .grades_list {
