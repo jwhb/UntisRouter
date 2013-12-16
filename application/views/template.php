@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?> &middot; <?php echo $this->config->item('app_name'); ?></title>
-    <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>/assets/css/pure-min.css">
-    <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>/assets/css/app.css">
+    <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/pure-min.css">
+    <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/app.css">
     <?php echo $this->config->item('tracking', ''); ?>
   </head>
   <body>
@@ -28,6 +28,6 @@
         </div>
       </div>
     </div>
-    <script src="<?php echo $this->config->base_url(); ?>/assets/js/ui.js"></script>
+    <script src="<?php echo $this->config->base_url(); ?>assets/js/ui.js"></script>
   </body>
 </html>
