@@ -29,7 +29,7 @@ class Substitution_model extends MY_Model {
         $where_str .= "$fieldname = '$condition' AND ";
       }
     }
-    $where_str = substr($where_str, 0, -4);
+    $where_str = substr($where_str, 0, -5);
     
     $this->db->select('id')->from($this->table())->where($where_str);
     $query = $this->db->get();
@@ -43,7 +43,6 @@ class Substitution_model extends MY_Model {
   
   public function deleteEmpty(){
     $this->delete_many_by_many(array('time' => '', 'teacher' => ''));
-    print_r($this->db->last_query());
   }
 
 }
