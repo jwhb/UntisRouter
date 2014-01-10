@@ -48,7 +48,7 @@ class Grades extends MY_Controller{
   
   public function view($grade, $d, $m, $y){
     $data['grade'] = $grade;
-    $date = $this->get_date($d, $m, $y);
+    $date = $this->get_date($d, $m, $y, true);
     
     if(!$date){
       $this->set_title('Ung&uuml;ltiges Datum');
@@ -74,7 +74,7 @@ class Grades extends MY_Controller{
           $this->set_title('Keine Eintr&auml;ge');
   
           $data['grade'] = $grade;
-          $data['substitutions'] = $this->substitutions->order_by('time')->get_all();
+          //$data['substitutions'] = $this->substitutions->order_by('time')->get_all();
           
           $this->template->write_view('content', 'substitutions/not_found', $data, true);
         }
@@ -92,9 +92,10 @@ class Grades extends MY_Controller{
     return($date);
   }
   
-  private function get_date($d, $m, $y){
+  private function get_date($d, $m, $y, $time_switch = false){
     try{
       $today = new DateTime('today');
+      if($time_switch && (new DateTime())->format('G') > 14) $today = new DateTime('tomorrow');
       $date = null;
       if(strlen($d) != 0){
         if(strlen($m) == 0) $m = $today->format('m');
