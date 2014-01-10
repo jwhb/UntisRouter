@@ -7,7 +7,7 @@ class Api extends MY_Controller{
   }
   
   public function index(){
-    exit('Erro: Invalid API call.');
+    exit('Error: Invalid API call.');
   }
   
   public function get($grade = 'all', $date = 'ahead'){
