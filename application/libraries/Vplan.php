@@ -124,7 +124,7 @@ class Vplan {
     $today = new DateTime('today');
     $today_data = $this->updateDate($today);
     $today_count = 0;
-    foreach($today_data as $grade){
+    if($today_data) foreach($today_data as $grade){
       $today_count += sizeof($grade);
     }
     if($today_data){
@@ -135,7 +135,7 @@ class Vplan {
     if($tmrw->format('N') > 5) $tmrw = new DateTime('next monday');
     $tmrw_data = $this->updateDate($tmrw);
     $tmrw_count = 0;
-    foreach($tmrw_data as $grade){
+    if($tmrw_data) foreach($tmrw_data as $grade){
       $tmrw_count += sizeof($grade);
     }
     if($tmrw_data){
