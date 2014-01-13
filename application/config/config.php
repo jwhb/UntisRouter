@@ -38,6 +38,8 @@ $config['vplan_single'] = 'http://ohg-bensberg.info/WSK_extdata/vplan/{yy}{mm}{d
 $config['update_token'] = 'Change me!';
 $config['tracking'] = '';
 
+setlocale(LC_ALL, 'de_DE', 'de_DE.utf8');
+
 /*
 |--------------------------------------------------------------------------
 | Index File
