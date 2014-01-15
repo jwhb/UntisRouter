@@ -890,4 +890,36 @@ class MY_Model extends CI_Model
         $method = ($multi) ? 'result' : 'row';
         return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
     }
+    
+    
+    // UntisRouter CUSTOM \\ 
+
+    /**
+     * Delete all records by an associative WHERE array and return deleted IDs
+     */
+    public function delete_many_by_many($where){
+      $where_str = '';
+      foreach($where as $fieldname=>$condition){
+        if(is_array($condition)){
+          $value_str = '';
+          foreach($condition as $value){
+            $value_str .= "'$value', ";
+          }
+          $value_str = substr($value_str, 0, -2);
+          $where_str .= "$fieldname in ($value_str) AND ";
+        }else{
+          $where_str .= "$fieldname = '$condition' AND ";
+        }
+      }
+      $where_str = substr($where_str, 0, -5);
+    
+      $this->db->select('id')->from($this->table())->where($where_str);
+      $query = $this->db->get();
+      $ids = array();
+      foreach($query->result() as $row){
+        $ids[] = $row->id;
+      }
+      if(sizeof($ids) > 0) $this->delete_many($ids);
+      return($ids);
+    }
 }
