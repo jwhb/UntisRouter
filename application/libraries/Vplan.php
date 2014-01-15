@@ -83,8 +83,11 @@ class Vplan {
       $substtext = '';
       foreach($html->getElementsByTagName('font') as $text_tag){
         if($text_tag->getAttribute('size') == 5){
-          $substtext = trim($this->getNodeHtml($text_tag));
-          $substtext = preg_replace("/(^)?(<br\s*\/?>\s*)+$/", '', $substtext);
+          $substtext = preg_replace("/(^)?(<br\s*\/?>\s*)+$/", '', $this->getNodeHtml($text_tag));
+          $substtext = trim(str_replace('<br>', "\n", $substtext));
+          $substtext = str_replace("\n\n", "\n", $substtext);
+          $substtext = str_replace("\n\n", "\n", $substtext);
+          $substtext = str_replace("\n", '<br>', $substtext);
         }
       }     
       

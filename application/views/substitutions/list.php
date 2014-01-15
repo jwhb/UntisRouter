@@ -1,3 +1,7 @@
+        <?php if(isset($substtext)): ?><div class="substtext">
+          <h3>Anmerkungen</h3>
+          <p><?php echo $substtext; ?></p>
+        </div><?php endif;?> 
         <table class="pure-table pure-table-bordered vp_table" >
           <thead>
             <tr>
