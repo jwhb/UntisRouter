@@ -1,5 +1,9 @@
 .DS_Store
 
+/.settings/
+/.buildpath
+/.project
+
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
