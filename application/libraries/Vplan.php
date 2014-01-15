@@ -22,6 +22,20 @@ class Vplan {
   public function __construct($urls){
     $this->index_url = $urls['index'];
     $this->single_url = $urls['single'];
+    
+    $this->ci =& get_instance();
+    $this->ci->load->model('substtext_model', 'substtext');
+  }
+  
+  private function getNodeHtml($node) {
+    $html = '';
+    $children = $node->childNodes;
+    foreach($children as $child){
+      $tmp_doc = new DOMDocument();
+      $tmp_doc->appendChild($tmp_doc->importNode($child, true));
+      $html .= $tmp_doc->saveHTML();
+    }
+    return $html;
   }
   
   public function buildUrl($date, $grade = ''){
@@ -48,6 +62,8 @@ class Vplan {
   
   public function analyzeIndex($html){
     if($html){
+      
+      //Gather grades from table
       $table = null;
       $i = -1;
       foreach($html->getElementsByTagName('table') as $cur_table){
@@ -63,7 +79,16 @@ class Vplan {
         $grades[] = $cell->nodeValue;
       }
       
-      return($grades);
+      //Gather substitution text
+      $substtext = '';
+      foreach($html->getElementsByTagName('font') as $text_tag){
+        if($text_tag->getAttribute('size') == 5){
+          $substtext = trim($this->getNodeHtml($text_tag));
+          $substtext = preg_replace("/(^)?(<br\s*\/?>\s*)+$/", '', $substtext);
+        }
+      }     
+      
+      return(array('grades' => $grades, 'substtext' => $substtext));
     }else return(false);
   }
   
@@ -108,7 +133,12 @@ class Vplan {
   
   function updateDate($date){
     $index = $this->downloadPlan($date);
-    $grades = $this->analyzeIndex($index);
+    $index_info = $this->analyzeIndex($index);
+    
+    $substtext = (isset($index_info['substtext']))? $index_info['substtext'] : '';
+    $this->updateSubstText($substtext, $date);
+    
+    $grades = (isset($index_info['grades']))? $index_info['grades'] : array();
     
     if($grades){
       $substs = array();
@@ -145,7 +175,6 @@ class Vplan {
   }
   
   function insertData($grades, $date){
-    $this->ci =& get_instance();
     $this->ci->load->model('Substitution_model', 'substitutions', TRUE);
     $old_ids = $this->ci->substitutions->delete_many_by_many(array('grade' => array_keys($grades), 'date' => $date->format('Y-m-d')));
     
@@ -170,6 +199,16 @@ class Vplan {
     }
     
     $this->ci->substitutions->deleteEmpty();
+  }
+  
+  function updateSubstText($texts, $date){
+    if(!is_array($texts)) $texts = array($texts);
+    $ids = $this->ci->substtext->delete_many_by_many(array('date' => $date->format('Y-m-d')));
+    foreach($texts as $text){
+      $values = array('date' => $date->format('Y-m-d'), 'text' => $text);
+      if(sizeof($ids) > 0) $values['id'] = array_shift($ids);
+      $this->ci->substtext->insert($values);
+    }
   }
   
 }

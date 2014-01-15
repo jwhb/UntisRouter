@@ -55,13 +55,19 @@ class Grades extends MY_Controller{
       $this->template->write_view('content', 'substitutions/invalid_date', $data, true);
     }else{
       $data['dates'] = $this->get_date_neighbors($date);
+      
+      //Get substitution text
+      $this->load->model('substtext_model', 'substtext');
+      $substtext = $this->substtext->get_by('date', $date->format('Y-m-d'));
+      if(strlen(@$substtext->text)) $data['substtext'] = $substtext->text;
+      
       if($grade == 'all'){
         $this->set_title('Alle Stufen');
         $data['substitutions'] = $this->substitutions->order_by('time')->get_many_by(array('date' => $date->format('Y-m-d')));
-        
         $this->template->write_view('content', 'substitutions/list', $data, true);
       }else{
         $substitutions = $this->substitutions->order_by('time')->get_many_by(array('grade' => $grade, 'date' => $date->format('Y-m-d')));
+        
         if(sizeof($substitutions) > 0){
           //Entries found
           $this->set_title(strtoupper($grade));
@@ -78,6 +84,7 @@ class Grades extends MY_Controller{
           
           $this->template->write_view('content', 'substitutions/not_found', $data, true);
         }
+        $this->template->write_view('content', 'substitutions/datenav', $data);
       }
     }
     $this->template->render();

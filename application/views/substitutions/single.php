@@ -1,3 +1,4 @@
+        <?php if(isset($substtext)): ?><div class="substtext"><?php echo $substtext; endif;?></div>
         <table class="pure-table pure-table-bordered vp_table" >
           <thead>
             <tr>
