@@ -39,6 +39,7 @@ class Vplan {
   }
   
   public function buildUrl($date, $grade = ''){
+    $grade = str_replace('-', '_', $grade);
     $url_format = (strlen($grade) == 0)? $this->index_url : $this->single_url;
     $search = array('{dd}', '{mm}', '{yy}');
     $replace = array($date->format('d'), $date->format('m'), $date->format('y'));
@@ -54,8 +55,9 @@ class Vplan {
   
   public function downloadPlan($date, $grade = ''){
     $url = $this->buildUrl($date, $grade);
+    $html = file_get_contents($url);
     $xml = new DOMDocument();
-    @$xml->loadHTMLFile($url);
+    @$xml->loadHTML($html);
     if(!$xml->textContent) return false;
     return($xml);
   }
@@ -140,7 +142,6 @@ class Vplan {
     
     $substtext = (isset($index_info['substtext']))? $index_info['substtext'] : '';
     $this->updateSubstText($substtext, $date);
-    
     $grades = (isset($index_info['grades']))? $index_info['grades'] : array();
     
     if($grades){
