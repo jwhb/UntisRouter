@@ -15,7 +15,7 @@
   <?php foreach($grades_groups as $groupname=>$group): ?> 
     <div class="pure-u-1-<?php echo sizeof($grades_groups); ?> grades_group">
     <?php foreach($group as $grade): ?> 
-      <a class="pure-button grade_button grade_<?php echo strtolower($grade); ?> grade_g_<?php echo strtolower(substr($grade, 0, 1)); ?>" href="<?php echo $this->config->base_url('grades/' . $grade); ?>"><?php echo $grade; ?></a><br/>
+      <a class="pure-button grade_button grade_<?php echo strtolower($grade); ?> grade_g_<?php echo strtolower(substr($grade, 0, 1)); ?>" href="<?php echo $this->config->base_url('grades/' . $grade); ?>"><?php echo $grade; ?></a>
     <?php endforeach; ?>
     </div>
   <?php endforeach; ?>
