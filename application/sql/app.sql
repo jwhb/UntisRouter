@@ -8,7 +8,7 @@ CREATE TABLE `substitutions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `grade` varchar(20) NOT NULL,
   `date` date DEFAULT NULL,
-  `time` tinyint(2) DEFAULT NULL,
+  `time` varchar(10) DEFAULT NULL,
   `teacher` varchar(20) DEFAULT NULL,
   `class` varchar(20) DEFAULT NULL,
   `room` varchar(20) DEFAULT NULL,
@@ -18,4 +18,21 @@ CREATE TABLE `substitutions` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for `subst_texts`
+-- ----------------------------
+DROP TABLE IF EXISTS `subst_texts`;
+CREATE TABLE `subst_texts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `text` text,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of subst_texts
+-- ----------------------------
