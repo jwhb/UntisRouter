@@ -1,4 +1,14 @@
+.DS_Store
+
+/.settings/
 /.buildpath
 /.project
-/.settings/
-/robots.txt
+
+application/cache/*
+!application/cache/index.html
+!application/cache/.htaccess
+
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+/user_guide/

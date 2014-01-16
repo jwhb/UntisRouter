@@ -1,117 +1,205 @@
 <?php
 
-$url = 'http://ohg-bensberg.info/WSK_extdata/{y}{m}{d}/Ver_Kla_{grade}.htm';
-$message = array(
-	'no_grade' => 'Es wurde keine Stufe ausgew&auml;hlt!',
-);
-$switch_time = 15;
-$grades = array('5A', '5C', '5D', '7B', '7C', '7D', '8A', '8B', 'EF', 'Q1', 'Q2');
-$tracking = '<script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(["trackPageView"]);
-  _paq.push(["enableLinkTracking"]);
+/*
+ *---------------------------------------------------------------
+ * APPLICATION ENVIRONMENT
+ *---------------------------------------------------------------
+ *
+ * You can load different configurations depending on your
+ * current environment. Setting the environment also influences
+ * things like logging and error reporting.
+ *
+ * This can be set to anything, but default usage is:
+ *
+ *     development
+ *     testing
+ *     production
+ *
+ * NOTE: If you change these, also change the error_reporting() code below
+ *
+ */
+	define('ENVIRONMENT', 'development');
+/*
+ *---------------------------------------------------------------
+ * ERROR REPORTING
+ *---------------------------------------------------------------
+ *
+ * Different environments will require different levels of error reporting.
+ * By default development will show errors but testing and live will hide them.
+ */
 
-  (function() {
-    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://stats.jwhy.de/";
-    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-    _paq.push(["setSiteId", "1"]);
-    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-';
+if (defined('ENVIRONMENT'))
+{
+	switch (ENVIRONMENT)
+	{
+		case 'development':
+			error_reporting(E_ALL);
+		break;
+	
+		case 'testing':
+		case 'production':
+			error_reporting(0);
+		break;
 
-function redirect($url, $header = true){
-  if($header){
-    header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ' . $url);
-  }else{
-    ?><!DOCTYPE html>
-<html>
-<header>
-  <meta http-equiv="refresh" content="0; url=<?php echo $url; ?>">
-</header>    
-</html>
-    <?php
-  }
-  exit();
-}
-
-function makeURL($dir, $params, $domain = ''){
-	$url = $domain . $dir;
-	foreach($params as $p){
-	  $url .= $p . '/';
+		default:
+			exit('The application environment is not set correctly.');
 	}
-	return($url);
 }
 
-function show_plan($params, $url, $date, $tracking = ''){
-  $url = str_replace(
-	    array('{grade}', '{d}', '{m}', '{y}'),
-	    array($params[0], $params[1], $params[2], substr($params[3], 2)),
-	    $url
-  );
-  $contents = '';
-  $status = true;
-  set_error_handler(function($severity, $message, $file, $line) { throw new ErrorException($message, $severity, $severity, $file, $line); });
-  try{
-    $contents = @file_get_contents($url);
-    $pos = strpos($contents, '</head>');
-    $contents = substr_replace($contents, $tracking, $pos, 0);
-    if(!$contents) throw new Exception('Kein Inhalt');
-  }catch(Exception $e){
-    $dateformat = $date->format('d.m.Y');
-    die("<!DOCTYPE html>
-<html>
-    <head>
-        $tracking
-    </head>
-    <body>
-        <p>Der Vertretungsplan f&uuml;r das angefragte Datum konnte nicht geladen werden.</p>
-    </body>
-</html>");
-  }
-  echo(preg_replace("/<img[^>]+\>/i", '',$contents));
-}
+/*
+ *---------------------------------------------------------------
+ * SYSTEM FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "system" folder.
+ * Include the path if the folder is not in the same  directory
+ * as this file.
+ *
+ */
+	$system_path = 'system';
 
-$dir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/') + 1);
-$domain = 'http://' . $_SERVER['HTTP_HOST'];
-$request = $_SERVER['REQUEST_URI'];
+/*
+ *---------------------------------------------------------------
+ * APPLICATION FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * If you want this front controller to use a different "application"
+ * folder then the default one you can set its name here. The folder
+ * can also be renamed or relocated anywhere on your server.  If
+ * you do, use a full server path. For more info please see the user guide:
+ * http://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ *
+ */
+	$application_folder = 'application';
 
-$raw_params = array_filter(explode('/', $request), 'strlen');
-$params = array();
-foreach($raw_params as $param){
-  $params[] = $param;
-}
-$n_params = sizeof($params);
+/*
+ * --------------------------------------------------------------------
+ * DEFAULT CONTROLLER
+ * --------------------------------------------------------------------
+ *
+ * Normally you will set your default controller in the routes.php file.
+ * You can, however, force a custom routing by hard-coding a
+ * specific controller class/function here.  For most applications, you
+ * WILL NOT set your routing here, but it's an option for those
+ * special instances where you might want to override the standard
+ * routing in a specific front controller that shares a common CI installation.
+ *
+ * IMPORTANT:  If you set the routing here, NO OTHER controller will be
+ * callable. In essence, this preference limits your application to ONE
+ * specific controller.  Leave the function name blank if you need
+ * to call functions dynamically via the URI.
+ *
+ * Un-comment the $routing array below to use this feature
+ *
+ */
+	// The directory name, relative to the "controllers" folder.  Leave blank
+	// if your controller is not in a sub-folder within the "controllers" folder
+	// $routing['directory'] = '';
 
-$date = (date('G', time()) < $switch_time)? new DateTime('today') : new DateTime('tomorrow');
-if($date->format('N')>5){
-  $date = new DateTime('next monday');
-}
+	// The controller class file name.  Example:  Mycontroller
+	// $routing['controller'] = '';
 
-switch($n_params){
-	case 0:
-	  echo('<p>' . $message['no_grade'] . "</p>\n<p>");
-	  foreach($grades as $grade){
-        echo("<a href=\"$domain$dir$grade\">$grade</a><br>");
-      }
-      echo('<br>');
-      exit();
-	  break;
-	case 1:
-	  $params[1] = $date->format('d');
-	  $n_params = 2;
-	case 2:
-	  $params[2] = $date->format('m');
-	  $n_params = 3;
-	case 3:
-	  $params[3] = $date->format('Y');
-	  $n_params = 4;
-	  
-	  redirect(makeURL($dir, $params, 'http://' . $_SERVER['HTTP_HOST']), false);
-	  break;
-	case 4:
-	  show_plan($params, $url, $date, $tracking);
-	  break;
-}
+	// The controller function you wish to be called.
+	// $routing['function']	= '';
+
+
+/*
+ * -------------------------------------------------------------------
+ *  CUSTOM CONFIG VALUES
+ * -------------------------------------------------------------------
+ *
+ * The $assign_to_config array below will be passed dynamically to the
+ * config class when initialized. This allows you to set custom config
+ * items or override any default config values found in the config.php file.
+ * This can be handy as it permits you to share one application between
+ * multiple front controller files, with each file containing different
+ * config values.
+ *
+ * Un-comment the $assign_to_config array below to use this feature
+ *
+ */
+	// $assign_to_config['name_of_config_item'] = 'value of config item';
+
+
+
+// --------------------------------------------------------------------
+// END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
+// --------------------------------------------------------------------
+
+/*
+ * ---------------------------------------------------------------
+ *  Resolve the system path for increased reliability
+ * ---------------------------------------------------------------
+ */
+
+	// Set the current directory correctly for CLI requests
+	if (defined('STDIN'))
+	{
+		chdir(dirname(__FILE__));
+	}
+
+	if (realpath($system_path) !== FALSE)
+	{
+		$system_path = realpath($system_path).'/';
+	}
+
+	// ensure there's a trailing slash
+	$system_path = rtrim($system_path, '/').'/';
+
+	// Is the system path correct?
+	if ( ! is_dir($system_path))
+	{
+		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+	}
+
+/*
+ * -------------------------------------------------------------------
+ *  Now that we know the path, set the main path constants
+ * -------------------------------------------------------------------
+ */
+	// The name of THIS file
+	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+
+	// The PHP file extension
+	// this global constant is deprecated.
+	define('EXT', '.php');
+
+	// Path to the system folder
+	define('BASEPATH', str_replace("\\", "/", $system_path));
+
+	// Path to the front controller (this file)
+	define('FCPATH', str_replace(SELF, '', __FILE__));
+
+	// Name of the "system folder"
+	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+
+
+	// The path to the "application" folder
+	if (is_dir($application_folder))
+	{
+		define('APPPATH', $application_folder.'/');
+	}
+	else
+	{
+		if ( ! is_dir(BASEPATH.$application_folder.'/'))
+		{
+			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+
+		define('APPPATH', BASEPATH.$application_folder.'/');
+	}
+
+/*
+ * --------------------------------------------------------------------
+ * LOAD THE BOOTSTRAP FILE
+ * --------------------------------------------------------------------
+ *
+ * And away we go...
+ *
+ */
+require_once BASEPATH.'core/CodeIgniter.php';
+
+/* End of file index.php */
+/* Location: ./index.php */
