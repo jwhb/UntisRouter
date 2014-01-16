@@ -63,7 +63,7 @@ class Grades extends MY_Controller{
       
       if($grade == 'all'){
         $this->set_title('Alle Stufen');
-        $data['substitutions'] = $this->substitutions->order_by('time')->get_many_by(array('date' => $date->format('Y-m-d')));
+        $data['substitutions'] = $this->substitutions->order_by('grade asc, time')->get_many_by(array('date' => $date->format('Y-m-d')));
         $this->template->write_view('content', 'substitutions/list', $data, true);
       }else{
         $substitutions = $this->substitutions->order_by('time')->get_many_by(array('grade' => $grade, 'date' => $date->format('Y-m-d')));
