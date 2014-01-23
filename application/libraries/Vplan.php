@@ -25,6 +25,7 @@ class Vplan {
     
     $this->ci =& get_instance();
     $this->ci->load->model('substtext_model', 'substtext');
+    $this->ci->load->helper('file');
   }
   
   private function getNodeHtml($node) {
@@ -38,7 +39,7 @@ class Vplan {
     return $html;
   }
   
-  public function buildUrl($date, $grade = ''){
+  private function buildUrl($date, $grade = ''){
     $grade = str_replace('-', '_', $grade);
     $url_format = (strlen($grade) == 0)? $this->index_url : $this->single_url;
     $search = array('{dd}', '{mm}', '{yy}');
@@ -53,7 +54,7 @@ class Vplan {
     return (is_array($url))? $url[0] : $url;
   }
   
-  public function downloadPlan($date, $grade = ''){
+  private function downloadPlan($date, $grade = ''){
     $url = $this->buildUrl($date, $grade);
     $html = file_get_contents($url);
     $xml = new DOMDocument();
@@ -62,7 +63,7 @@ class Vplan {
     return($xml);
   }
   
-  public function analyzeIndex($html){
+  private function analyzeIndex($html){
     if($html){
       
       //Gather grades from table
@@ -97,7 +98,7 @@ class Vplan {
     }else return(false);
   }
   
-  public function analyzeSingle($html){
+  private function analyzeSingle($html){
     if($html){
       $table = null;
       $i = -1;
@@ -136,7 +137,7 @@ class Vplan {
     }else return(false);
   }
   
-  function updateDate($date){
+  public function updateDate($date){
     $index = $this->downloadPlan($date);
     $index_info = $this->analyzeIndex($index);
     
@@ -154,7 +155,7 @@ class Vplan {
     }else return(false);
   }
   
-  function updateAll(){
+  public function updateAll(){
     $today = new DateTime('today');
     $today_data = $this->updateDate($today);
     $today_count = 0;
@@ -175,10 +176,13 @@ class Vplan {
     if($tmrw_data){
       $this->insertData($tmrw_data, $tmrw);
     }
+    
+    $this->exportJson();
+    
     return(array($today_count, $tmrw_count));
   }
   
-  function insertData($grades, $date){
+  private function insertData($grades, $date){
     $this->ci->load->model('Substitution_model', 'substitutions', TRUE);
     $old_ids = $this->ci->substitutions->delete_many_by_many(array('grade' => array_keys($grades), 'date' => $date->format('Y-m-d')));
     
@@ -202,10 +206,10 @@ class Vplan {
       }
     }
     
-    $this->ci->substitutions->deleteEmpty();
+    $this->ci->substitutions->delete_empty();
   }
   
-  function updateSubstText($texts, $date){
+  private function updateSubstText($texts, $date){
     if(!is_array($texts)) $texts = array($texts);
     $ids = $this->ci->substtext->delete_many_by_many(array('date' => $date->format('Y-m-d')));
     foreach($texts as $text){
@@ -213,6 +217,11 @@ class Vplan {
       if(sizeof($ids) > 0) $values['id'] = array_shift($ids);
       $this->ci->substtext->insert($values);
     }
+  }
+  
+  public function exportJson(){
+    $all_ahead = $this->ci->substitutions->get_all_ahead();
+    write_file('assets/export/vp_all_ahead.json', json_encode($all_ahead));
   }
   
 }

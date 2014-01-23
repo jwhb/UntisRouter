@@ -15,8 +15,16 @@ class Substitution_model extends MY_Model {
     return($grades);
   }
   
-  public function deleteEmpty(){
+  public function delete_empty(){
     $this->delete_many_by_many(array('time' => '', 'teacher' => ''));
+  }
+  
+  public function get_all_ahead(){
+    $today = new DateTime('today');
+    $today = $today->format('Y-m-d');
+    
+    $data = $this->order_by('date asc, grade asc, time')->get_many_by("date >= '$today'");
+    return($data);
   }
 
 }
