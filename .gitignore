@@ -1,8 +1,11 @@
 .DS_Store
 
-/.settings/
-/.buildpath
-/.project
+.settings/
+.buildpath
+.project
+
+assets/export/*
+!assets/export/.empty
 
 application/cache/*
 !application/cache/index.html
@@ -11,4 +14,5 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
-/user_guide/
+
+user_guide/
