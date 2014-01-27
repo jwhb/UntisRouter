@@ -1,5 +1,8 @@
 .DS_Store
 
+.htpasswd
+robots.txt
+
 .settings/
 .buildpath
 .project
