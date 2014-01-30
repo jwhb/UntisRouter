@@ -45,7 +45,7 @@ class Api extends MY_Controller{
       
       $substs = $this->substitutions->order_by('date asc, grade asc, time')->get_many_by("$date_where AND $grade_where");
       $notes = $this->substtext->order_by('date')->get_many_by($date_where);
-      $json = json_encode(array('substitutions' => $substs,'notes' => $notes));
+      $json = json_encode(array('substitutions' => $substs, 'notes' => $notes));
     }
   
     echo($json);

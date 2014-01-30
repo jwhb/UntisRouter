@@ -2719,7 +2719,7 @@ class HTML_Formatter {
 		}
 	}
 	static function minify_javascript(&$root, $indent_string = ' ', $wrap_comment = true, $recursive = true) {
-		include_once('third party/jsminplus.php');
+		include_once(APPPATH . 'third_party/jsminplus.php');
 		$errors = array();
 		foreach($root->select('script:not-empty > "~text~"', false, $recursive, true) as $c) {
 			try {
