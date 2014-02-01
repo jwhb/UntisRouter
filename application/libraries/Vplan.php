@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Vplan {
-  
+
   private $index_url;
   private $single_url;
-  
+
   private $headers = array(
-  	'grade',
+        'grade',
     'time',
     'teacher',
     'class',
@@ -18,16 +18,16 @@ class Vplan {
     'subst_to',
     'info'
   );
-  
+
   public function __construct($urls){
     $this->index_url = $urls['index'];
     $this->single_url = $urls['single'];
-    
+
     $this->ci =& get_instance();
     $this->ci->load->model('substtext_model', 'substtext');
     $this->ci->load->helper('file');
   }
-  
+
   private function getNodeHtml($node) {
     $html = '';
     $children = $node->childNodes;
@@ -38,7 +38,7 @@ class Vplan {
     }
     return $html;
   }
-  
+
   private function buildUrl($date, $grade = ''){
     $grade = str_replace('-', '_', $grade);
     $url_format = (strlen($grade) == 0)? $this->index_url : $this->single_url;
@@ -46,14 +46,14 @@ class Vplan {
     $replace = array($date->format('d'), $date->format('m'), $date->format('y'));
 
     if(strlen($grade) > 0){
-    	$search[] = '{grade}';
-    	$replace[] = $grade;
+        $search[] = '{grade}';
+        $replace[] = $grade;
     }
-    
+
     $url = str_replace($search, $replace, $url_format);
     return (is_array($url))? $url[0] : $url;
   }
-  
+
   private function downloadPlan($date, $grade = ''){
     $url = $this->buildUrl($date, $grade);
     $html = file_get_contents($url);
@@ -62,10 +62,10 @@ class Vplan {
     if(!$xml->textContent) return false;
     return($xml);
   }
-  
+
   private function analyzeIndex($html){
     if($html){
-      
+
       //Gather grades from table
       $table = null;
       $i = -1;
@@ -75,13 +75,13 @@ class Vplan {
           $table = $cur_table;
         }
       }
-      
+
       $grades = array();
-      
+
       foreach($table->getElementsByTagName('a') as $cell){
         $grades[] = $cell->nodeValue;
       }
-      
+
       //Gather substitution text
       $substtext = '';
       foreach($html->getElementsByTagName('font') as $text_tag){
@@ -92,12 +92,12 @@ class Vplan {
           $substtext = str_replace("\n\n", "\n", $substtext);
           $substtext = str_replace("\n", '<br>', $substtext);
         }
-      }     
-      
+      }
+
       return(array('grades' => $grades, 'substtext' => $substtext));
     }else return(false);
   }
-  
+
   private function analyzeSingle($html){
     if($html){
       $table = null;
@@ -108,7 +108,7 @@ class Vplan {
           $table = $cur_table;
         }
       }
-      
+
       $substs = array();
 
       if($table != null){
@@ -122,7 +122,7 @@ class Vplan {
               $j++;
               $text = $subst_cell->textContent;
               $text = trim(htmlspecialchars(utf8_decode($text)));
-              
+
               if(isset($this->headers[$j])){ //Try to get cell header text from array
                 $subst[$this->headers[$j]] = $text;
               }else{
@@ -136,15 +136,15 @@ class Vplan {
       return($substs);
     }else return(false);
   }
-  
+
   public function updateDate($date){
     $index = $this->downloadPlan($date);
     $index_info = $this->analyzeIndex($index);
-    
+
     $substtext = (isset($index_info['substtext']))? $index_info['substtext'] : '';
     $this->updateSubstText($substtext, $date);
     $grades = (isset($index_info['grades']))? $index_info['grades'] : array();
-    
+
     if($grades){
       $substs = array();
       foreach($grades as $grade){
@@ -154,7 +154,7 @@ class Vplan {
       return($substs);
     }else return(false);
   }
-  
+
   public function updateAll(){
     $today = new DateTime('today');
     $today_data = $this->updateDate($today);
@@ -165,7 +165,7 @@ class Vplan {
     if($today_data){
       $this->insertData($today_data, $today);
     }
-    
+
     $tmrw = new DateTime('tomorrow');
     if($tmrw->format('N') > 5) $tmrw = new DateTime('next monday');
     $tmrw_data = $this->updateDate($tmrw);
@@ -176,21 +176,21 @@ class Vplan {
     if($tmrw_data){
       $this->insertData($tmrw_data, $tmrw);
     }
-    
+
     $this->exportJson();
-    
+
     return(array($today_count, $tmrw_count));
   }
-  
+
   private function insertData($grades, $date){
     $this->ci->load->model('Substitution_model', 'substitutions', TRUE);
     $old_ids = $this->ci->substitutions->delete_many_by_many(array('grade' => array_keys($grades), 'date' => $date->format('Y-m-d')));
-    
+
     foreach($grades as $grade_name=>$grade){
       if($grade){
         foreach($grade as $entry){
           $data = array(
-          	  'grade' => $grade_name,
+                  'grade' => $grade_name,
               'date' => $date->format('Y-m-d'),
               'time' => $entry['time'],
               'teacher' => $entry['teacher'],
@@ -205,10 +205,10 @@ class Vplan {
         }
       }
     }
-    
+
     $this->ci->substitutions->delete_empty();
   }
-  
+
   private function updateSubstText($texts, $date){
     if(!is_array($texts)) $texts = array($texts);
     $ids = $this->ci->substtext->delete_many_by_many(array('date' => $date->format('Y-m-d')));
@@ -218,12 +218,13 @@ class Vplan {
       $this->ci->substtext->insert($values);
     }
   }
-  
+
   public function exportJson(){
     $all_ahead = $this->ci->substitutions->get_all_ahead();
-    write_file('assets/export/vp_all_ahead.json', json_encode($all_ahead));
+    $notes = $this->ci->substtext->get_all_ahead();
+    write_file('assets/export/vp_all_ahead.json', json_encode(array('substs' => $all_ahead, 'notes' => $notes)));
   }
-  
+
 }
 
 /* End of file Vplan.php */
