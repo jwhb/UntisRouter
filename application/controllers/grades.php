@@ -47,14 +47,19 @@ class Grades extends MY_Controller{
   }
   
   public function view($grade, $d, $m, $y){
-    $data['grade'] = $grade;
+    $today = new DateTime('today');
     $date = $this->get_date($d, $m, $y, true);
+    $data['grade'] = $grade;
+    $data['dates'] = $this->get_date_neighbors($date);
     
     if(!$date){
       $this->set_title('Ung&uuml;ltiges Datum');
       $this->template->write_view('content', 'substitutions/invalid_date', $data, true);
+    }elseif(($today->getTimestamp() - $date->getTimestamp()) >= $this->config->item('public_access_time') && $this->config->item('public_access_time') != 0){
+      //Exceeded public access time
+      $this->set_title('Zugriff verweigert');
+      $this->template->write_view('content', 'substitutions/exceeded_public_access', $data, true);
     }else{
-      $data['dates'] = $this->get_date_neighbors($date);
       
       //Get substitution text
       $this->load->model('substtext_model', 'substtext');
@@ -84,9 +89,9 @@ class Grades extends MY_Controller{
           
           $this->template->write_view('content', 'substitutions/not_found', $data, true);
         }
-        $this->template->write_view('content', 'substitutions/datenav', $data);
       }
     }
+    $this->template->write_view('content', 'substitutions/datenav', $data);
     $this->template->render();
   }
   

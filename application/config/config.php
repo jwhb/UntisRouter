@@ -34,6 +34,7 @@ $config['page_menu'] = array(
 
 $config['vplan_index'] = 'http://ohg-bensberg.info/WSK_extdata/vplan/{yy}{mm}{dd}/Ver_Kla.htm';
 $config['vplan_single'] = 'http://ohg-bensberg.info/WSK_extdata/vplan/{yy}{mm}{dd}/Ver_Kla_{grade}.htm';
+$config['public_access_time'] = 3600 * 24 * 3;
 
 $config['update_token'] = 'Change me!';
 $config['tracking'] = '';
