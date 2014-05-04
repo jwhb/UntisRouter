@@ -131,7 +131,7 @@ The content `<div>` is where all your content goes.
 }
 
 .header {
-	margin: 0;
+	margin: 0 0 1em;
 	color: #333;
 	text-align: center;
 	padding: 2.5em 2em 0;
