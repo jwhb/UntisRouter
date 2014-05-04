@@ -28,6 +28,14 @@
 	padding: 9.6px;
 }
 
+#sidebar-copyright a{
+	padding: 0 !important;
+}
+
+#sidebar-copyright p{
+	margin: 0.4em !important;
+}
+
 .pull-down {
 	bottom: 0;
 	position: absolute;

@@ -11,4 +11,4 @@
             ?><li<?php if(strtolower($entry['controller']) == $controller) echo ' class="pure-menu-selected"'; ?>><a href="<?php echo $this->config->base_url('grades/' . $grade); ?>"><?php echo $grade; ?></a></li>
             <?php endforeach;*/ ?>
           </ul>
-          <div id="sidebar-copyright" class="pull-down"><?php echo $this->config->item('sidebar_copyright'); ?></div>
+          <div id="sidebar-copyright" class="pull-down"><?php echo str_replace('{base_url}', $this->config->base_url(), $this->config->item('sidebar_copyright')); ?></div>

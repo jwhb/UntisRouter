@@ -22,7 +22,7 @@ $config['base_url']	= '';
 |--------------------------------------------------------------------------
 */
 $config['app_name'] = 'UntisReader';
-$config['sidebar_copyright'] = 'This is Open Source Software.';
+$config['sidebar_copyright'] = '<p>This is Open Source Software.</p><p><a href="{base_url}static/disclaimer">Disclaimer</a></p>';
 $config['page_title_prefix'] = '';
 $config['page_title_suffix'] = ' &middot; ' . $config['app_name'];
 $config['page_menu'] = array(
