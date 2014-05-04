@@ -16,7 +16,7 @@
       </a>
       <div id="menu">
         <div class="pure-menu pure-menu-open">
-<?php echo $sidebar; ?> 
+<?php echo $sidebar; ?>
         </div>
       </div>
       <div id="main">
