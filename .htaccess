@@ -1,5 +1,7 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond $1 !^(assets) 
+RewriteCond $1 !^(assets)
 RewriteRule ^.*$ index.php/$0
+
+Header set Access-Control-Allow-Origin "*"
