@@ -222,7 +222,7 @@ class Vplan {
   public function exportJson(){
     $all_ahead = $this->ci->substitutions->get_all_ahead();
     $notes = $this->ci->substtext->get_all_ahead();
-    write_file('assets/export/vp_all_ahead.json', json_encode(array('substs' => $all_ahead, 'notes' => $notes)));
+    write_file('assets/export/vp_all_ahead.json', json_encode(array('substitutions' => $all_ahead, 'notes' => $notes)));
   }
 
 }
