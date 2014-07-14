@@ -21,7 +21,8 @@ class Api extends REST_Controller {
         $sql_date = ($date != 'ahead')? $date : $this->substitutions->get_today_string();
 
         $substitutions = $this->substitutions->get_grade($grade, $date);
-        $notes = $this->substtext->order_by('date')->get_many_by('date', $sql_date);
+        $notes = $this->substtext->order_by('date')->get_by('date', $sql_date);
+        $notes = (isset($notes->text))? $notes->text : '';
         $this->response(array('substitutions' => $substitutions, 'notes' => $notes), 200);
     }
 
