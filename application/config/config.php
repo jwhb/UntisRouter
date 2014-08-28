@@ -21,6 +21,10 @@ $config['base_url']	= '';
 | Application specific
 |--------------------------------------------------------------------------
 */
+
+/* IMPORTANT! Set a secret encryption key! */
+$config['encryption_key'] = 'CHANGE_ME!';
+
 $config['app_name'] = 'UntisReader';
 $config['sidebar_copyright'] = '<p>This is Open Source Software.</p><p><a href="{base_url}static/disclaimer">Disclaimer</a></p>';
 $config['page_title_prefix'] = '';
@@ -240,17 +244,6 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 |
 */
 $config['cache_path'] = '';
-
-/*
-|--------------------------------------------------------------------------
-| Encryption Key
-|--------------------------------------------------------------------------
-|
-| If you use the Encryption class or the Session class you
-| MUST set an encryption key.  See the user guide for info.
-|
-*/
-$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
