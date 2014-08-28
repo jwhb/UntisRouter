@@ -3,7 +3,7 @@
 class Grades extends MY_Controller{
 
   public function __construct(){
-    parent::__construct();
+    parent::__construct(true);
   }
 
   public function _remap($grade){
