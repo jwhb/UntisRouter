@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 	function __construct()
 	{
@@ -43,6 +43,7 @@ class Auth extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
+			$this->set_title(lang('index_heading'));
 			$this->_render_page('auth/index', $this->data);
 		}
 	}
@@ -93,6 +94,7 @@ class Auth extends CI_Controller {
 				'type' => 'password',
 			);
 
+			$this->set_title(lang('login_heading'));
 			$this->_render_page('auth/login', $this->data);
 		}
 	}
@@ -156,6 +158,7 @@ class Auth extends CI_Controller {
 			);
 
 			//render
+			$this->set_title(lang('change_password_heading'));
 			$this->_render_page('auth/change_password', $this->data);
 		}
 		else
@@ -199,6 +202,7 @@ class Auth extends CI_Controller {
 
 			//set any errors and display the form
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			$this->set_title(lang('forgot_password_heading'));
 			$this->_render_page('auth/forgot_password', $this->data);
 		}
 		else
@@ -281,6 +285,7 @@ class Auth extends CI_Controller {
 				$this->data['code'] = $code;
 
 				//render
+				$this->set_title(lang('reset_password_heading'));
 				$this->_render_page('auth/reset_password', $this->data);
 			}
 			else
@@ -366,6 +371,7 @@ class Auth extends CI_Controller {
 			$this->data['csrf'] = $this->_get_csrf_nonce();
 			$this->data['user'] = $this->ion_auth->user($id)->row();
 
+			$this->set_title(lang('deactivate_heading'));
 			$this->_render_page('auth/deactivate_user', $this->data);
 		}
 		else
@@ -481,6 +487,7 @@ class Auth extends CI_Controller {
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
 
+			$this->set_title(lang('create_user_heading'));
 			$this->_render_page('auth/create_user', $this->data);
 		}
 	}
@@ -611,6 +618,7 @@ class Auth extends CI_Controller {
 			'type' => 'password'
 		);
 
+		$this->set_title(lang('edit_user_heading'));
 		$this->_render_page('auth/edit_user', $this->data);
 	}
 
@@ -658,6 +666,7 @@ class Auth extends CI_Controller {
 				'value' => $this->form_validation->set_value('description'),
 			);
 
+			$this->set_title(lang('create_group_heading'));
 			$this->_render_page('auth/create_group', $this->data);
 		}
 	}
@@ -721,6 +730,7 @@ class Auth extends CI_Controller {
 			'value' => $this->form_validation->set_value('group_description', $group->description),
 		);
 
+		$this->set_title(lang('edit_group_heading'));
 		$this->_render_page('auth/edit_group', $this->data);
 	}
 
@@ -751,12 +761,9 @@ class Auth extends CI_Controller {
 
 	function _render_page($view, $data=null, $render=false)
 	{
-
 		$this->viewdata = (empty($data)) ? $this->data: $data;
-
-		$view_html = $this->load->view($view, $this->viewdata, $render);
-
-		if (!$render) return $view_html;
+		$this->template->write_view('content', $view, $this->viewdata, true);
+		return $this->template->render(null, $render);
 	}
 
 }
