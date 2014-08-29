@@ -6,6 +6,7 @@
     <title><?php if(isset($grade) && !isset($substitutions)): echo $grade; ?> &middot; <?php endif; ?><?php echo $title; ?> &middot; <?php echo $this->config->item('app_name'); ?></title>
     <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/pure-min.css">
     <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/app.css">
+    <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/font-awesome.min.css">
     <?php echo $this->config->item('tracking', ''); ?>
   </head>
   <body>
@@ -15,9 +16,7 @@
         <span></span>
       </a>
       <div id="menu">
-        <div class="pure-menu pure-menu-open">
 <?php echo $sidebar; ?>
-        </div>
       </div>
       <div id="main">
         <div class="header">
