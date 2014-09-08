@@ -16,17 +16,8 @@ class MY_Controller extends CI_Controller {
     $this->load->library('ion_auth');
     $this->lang->load('auth');
 
-    $user = $this->ion_auth->user()->row();
-    $data['user'] = array();
-    if($user){
-        $data['user'] = array(
-            'username' => $user->username,
-            'loggedin' => $user->active,
-            'email' => $user->email,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name
-        );
-    }
+
+    $data['user'] = $this->get_user_data();
 
     $data['menu'] = $this->config->item('page_menu');
     $data['controller'] = strtolower($this->uri->rsegment(1));
@@ -37,6 +28,22 @@ class MY_Controller extends CI_Controller {
 
   function index() {
     $this->template->render();
+  }
+
+  protected function get_user_data(){
+      $user_data = $this->ion_auth->user()->row();
+      $user = array(
+        'username' => $user_data->username,
+        'loggedin' => $user_data->active,
+        'email' => $user_data->email,
+        'first_name' => $user_data->first_name,
+        'last_name' => $user_data->last_name
+      );
+      return $user;
+  }
+
+  protected function get_all_user_data(){
+      return $this->ion_auth->user()->row();
   }
 
 }
