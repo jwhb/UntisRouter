@@ -1,15 +1,42 @@
-<form class="pure-form pure-form-stacked">
-  <fieldset>
-    <div class="pure-g">
-      <div class="pure-u-1 pure-u-md-1-3">
+            <?php echo form_open('profile/update', array('class' => 'pure-form pure-form-stacked')); ?>
 
-        <label for="first_name">First Name</label>
-        <input id="first_name" type="text" placeholder="First Name" value="<?php echo $user['first_name'] ?>">
+              <?php echo form_fieldset(); ?>
 
-        <label for="last_name">Last Name</label>
-        <input id="last_name" type="text" placeholder="Last Name" value="<?php echo $user['last_name'] ?>">
+                <?php echo form_label('E-Mail', 'email')?>
 
-        <button type="submit" style="display: none;" class="pure-button pure-button-primary">Sign in</button>
-    </div>
-  </fieldset>
-</form>
+                <?php echo form_input(array(
+                    'name' => 'email',
+                    'placeholder' => 'username@example.org',
+                    'id' => 'email',
+                    'value' => $user['email']
+                )); ?>
+
+
+                <?php echo form_label('First Name', 'first_name')?>
+
+                <?php echo form_input(array(
+                    'name' => 'first_name',
+                    'placeholder' => 'First Name',
+                    'id' => 'first_name',
+                    'value' => $user['first_name']
+                )); ?>
+
+
+                <?php echo form_label('Last Name', 'last_name')?>
+
+                <?php echo form_input(array(
+                    'name' => 'last_name',
+                    'placeholder' => 'Last Name',
+                    'id' => 'last_name',
+                    'value' => $user['last_name']
+                )); ?>
+
+
+                <br />
+
+                <?php echo form_submit(array('class' => 'pure-button pure-button-primary', 'name' => 'update-profile', 'value' => 'Update Profile' )); ?>
+
+              <?php echo form_fieldset_close(); ?>
+
+            <?php echo form_close(); ?>
+

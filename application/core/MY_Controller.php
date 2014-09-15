@@ -32,13 +32,20 @@ class MY_Controller extends CI_Controller {
 
   protected function get_user_data(){
       $user_data = $this->ion_auth->user()->row();
-      $user = array(
-        'username' => $user_data->username,
-        'loggedin' => $user_data->active,
-        'email' => $user_data->email,
-        'first_name' => $user_data->first_name,
-        'last_name' => $user_data->last_name
-      );
+      if(sizeof($user_data)){
+          $user = array(
+            'username' => $user_data->username,
+            'id' => $user_data->id,
+            'loggedin' => $user_data->active,
+            'email' => $user_data->email,
+            'first_name' => $user_data->first_name,
+            'last_name' => $user_data->last_name
+          );
+      } else {
+          $user = array(
+              'loggedin' => false
+          );
+      }
       return $user;
   }
 
