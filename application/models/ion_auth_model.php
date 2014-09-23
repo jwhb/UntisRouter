@@ -1341,7 +1341,7 @@ class Ion_auth_model extends CI_Model
 		}
 
 		$this->response = $this->db->get($this->tables['users']);
-
+//print_r($this->db->last_query()); exit();
 		return $this;
 	}
 
@@ -1768,8 +1768,8 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('pre_login_remembered_user');
 
 		//check for valid data
-		if (!get_cookie($this->config->item('identity_cookie_name', 'ion_auth')) 
-			|| !get_cookie($this->config->item('remember_cookie_name', 'ion_auth')) 
+		if (!get_cookie($this->config->item('identity_cookie_name', 'ion_auth'))
+			|| !get_cookie($this->config->item('remember_cookie_name', 'ion_auth'))
 			|| !$this->identity_check(get_cookie($this->config->item('identity_cookie_name', 'ion_auth'))))
 		{
 			$this->trigger_events(array('post_login_remembered_user', 'post_login_remembered_user_unsuccessful'));
