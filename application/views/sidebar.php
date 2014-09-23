@@ -15,7 +15,7 @@
             <p><?php if(@$user['loggedin']): ?>
                 <i class="fa fa-user"></i> <?php echo anchor('profile', (isset($user['first_name']))? $user['first_name'] : ''); ?><br />
                 <i class="fa fa-sign-out"></i> <?php echo anchor('auth/logout', 'Logout'); ?>&nbsp;
-                <?php else: ?><i class="fa fa-sign-in"></i> <?php echo anchor('auth/create_user', lang('login_submit_btn')); endif; ?>
+                <?php else: ?><i class="fa fa-sign-in"></i> <?php echo anchor('auth/login', lang('login_submit_btn')); endif; ?>
             </p>
           </div>
         </div>
