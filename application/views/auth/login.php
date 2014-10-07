@@ -5,17 +5,17 @@
 <?php echo form_open("auth/login");?>
 
   <p>
-    <?php echo lang('login_identity_label', 'identity');?>
+    Nutzername (vorname.nachname):
     <?php echo form_input($identity);?>
   </p>
 
   <p>
-    <?php echo lang('login_password_label', 'password');?>
+    Passwort (Geburtsdatum):
     <?php echo form_input($password);?>
   </p>
 
   <p>
-    <?php echo lang('login_remember_label', 'remember');?>
+    angemeldet bleiben
     <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?>
   </p>
 
@@ -24,4 +24,4 @@
 
 <?php echo form_close();?>
 
-<p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>
+<!--<p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>-->
