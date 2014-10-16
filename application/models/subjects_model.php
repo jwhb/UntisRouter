@@ -40,7 +40,7 @@ class Subjects_model extends MY_Model {
         }
 
         foreach($add as $add_id){
-            $old_id = mysql_real_escape_string($old_id);
+            $add_id = mysql_real_escape_string($add_id);
             $query = $this->db->query("INSERT INTO users_subjects (user_id, subject_id) VALUES ($user_id, $add_id)");
         }
     }
