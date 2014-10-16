@@ -112,3 +112,14 @@
 
             <?php echo form_close(); ?>
 
+            <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/multiple-select.css">
+            <script src="<?php echo $this->config->base_url(); ?>assets/js/jquery.min.js"></script>
+            <script src="<?php echo $this->config->base_url(); ?>assets/js/jquery.multiple.select.js"></script>
+            <script>
+                $("select").multipleSelect({
+                    width: 270,
+                    selectAll: false,
+                    multipleWidth: 200
+                });
+                $(".ms-choice").width("270px");
+            </script>
