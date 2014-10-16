@@ -121,6 +121,7 @@
                     selectAll: false,
                     multipleWidth: 200,
                     allSelected: 'Alle ausgew&auml;hlt',
+                    countSelected: '# von % F&auml;chern ausgew&auml;hlt',
                     minumimCountSelected: 1,
                 });
                 $(".ms-choice").width("270px");
