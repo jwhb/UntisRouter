@@ -24,32 +24,37 @@ class Profile extends MY_Controller{
 
   public function update(){
       if($this->input->post('update-profile')){
-		  $this->load->model('ion_auth_model');
+        $this->load->model('ion_auth_model');
+        $this->load->model('subjects_model', 'subjects');
+        $user = $this->get_user_data();
+        $ch = array();
 
-          $user = $this->get_user_data();
-          $ch = array();
-
-          $chk = function($ch, $user, $field){
-              $new_val = $this->input->post($field);
-              if($new_val !== false && $new_val != $user[$field]){
-                  $ch[$field] = $new_val;
-              }
-              return $ch;
-          };
-
-          $ch = $chk($ch, $user, 'first_name');
-          $ch = $chk($ch, $user, 'last_name');
-          $ch = $chk($ch, $user, 'email');
-          $ch = $chk($ch, $user, 'fav_subjects');
-          $ch = $chk($ch, $user, 'fav_hobbies');
-          $ch = $chk($ch, $user, 'fav_child_job');
-          $ch = $chk($ch, $user, 'fav_occupation');
-          $ch = $chk($ch, $user, 'fav_lifegoal');
-          $ch = $chk($ch, $user, 'fav_cite');
-          $ch = $chk($ch, $user, 'mem_events');
-          if(sizeof($ch)){
-              $this->ion_auth_model->update($user['id'], $ch);
+        $chk = function($ch, $user, $field){
+          $new_val = $this->input->post($field);
+          if($new_val !== false && $new_val != $user[$field]){
+            $ch[$field] = $new_val;
           }
+          return $ch;
+        };
+
+        $ch = $chk($ch, $user, 'first_name');
+        $ch = $chk($ch, $user, 'last_name');
+        $ch = $chk($ch, $user, 'email');
+        $ch = $chk($ch, $user, 'fav_hobbies');
+        $ch = $chk($ch, $user, 'fav_child_job');
+        $ch = $chk($ch, $user, 'fav_occupation');
+        $ch = $chk($ch, $user, 'fav_lifegoal');
+        $ch = $chk($ch, $user, 'fav_cite');
+        $ch = $chk($ch, $user, 'mem_events');
+        if(sizeof($ch)){
+          $this->ion_auth_model->update($user['id'], $ch);
+        }
+
+        $sel_subjects = $this->input->post('fav_subjects');
+        if($sel_subjects != $user['fav_subjects']){
+          $this->subjects->update_user_subjects($user['id'], $sel_subjects);
+        }
+        exit();
       }
 
       redirect('profile', 'refresh');

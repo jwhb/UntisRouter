@@ -37,7 +37,7 @@
 
                 <?php echo form_label('Meine Lieblingsf&auml;cher', 'fav_subjects')?>
 
-                <?php echo form_multiselect('fav_subjects', $subjects, $user['subjects'], 'disabled'); ?>
+                <?php echo form_multiselect('fav_subjects[]', $subjects, $user['subjects']); ?>
 
 
                 <?php echo form_label('Meine Hobbies', 'fav_hobbies')?>
