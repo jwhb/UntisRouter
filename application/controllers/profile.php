@@ -54,7 +54,6 @@ class Profile extends MY_Controller{
         if($sel_subjects != $user['fav_subjects']){
           $this->subjects->update_user_subjects($user['id'], $sel_subjects);
         }
-        exit();
       }
 
       redirect('profile', 'refresh');
