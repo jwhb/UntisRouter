@@ -119,7 +119,9 @@
                 $("select").multipleSelect({
                     width: 270,
                     selectAll: false,
-                    multipleWidth: 200
+                    multipleWidth: 200,
+                    allSelected: 'Alle ausgew&auml;hlt',
+                    minumimCountSelected: 1,
                 });
                 $(".ms-choice").width("270px");
             </script>
