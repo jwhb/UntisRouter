@@ -11,6 +11,16 @@
                     'value' => $user['email']
                 )); ?>
 
+
+                <?php echo form_label('Neues Passwort', 'password')?>
+
+                <?php echo form_password(array(
+                    'name' => 'password',
+                    'id' => 'password',
+                    'placeholder' => '(wenn &Auml;nderung gew&uuml;nscht)',
+                    'disabled' => true
+                )); ?>
+
                 <br />
                 <p>Fragebogen</p>
                 <hr style="margin-bottom: 2em;" />
@@ -37,7 +47,8 @@
 
                 <?php echo form_label('Meine Lieblingsf&auml;cher', 'fav_subjects')?>
 
-                <?php echo form_multiselect('fav_subjects[]', $subjects, $user['subjects']); ?>
+                <?php $subject_count = sizeof($subjects);
+                      echo form_multiselect('fav_subjects[]', $subjects, $user['subjects'], "size=\"$subject_count\""); ?>
 
 
                 <?php echo form_label('Meine Hobbies', 'fav_hobbies')?>
