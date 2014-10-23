@@ -106,8 +106,8 @@
                     'id' => 'fav_cite',
                     'value' => $user['fav_cite'],
                     'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '10',
+                    'maxlength' => '500'
                 )); ?>
 
 

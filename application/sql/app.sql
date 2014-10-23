@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fav_child_job` varchar(200) DEFAULT NULL,
   `fav_occupation` varchar(200) DEFAULT NULL,
   `fav_lifegoal` varchar(200) DEFAULT NULL,
-  `fav_cite` varchar(200) DEFAULT NULL,
+  `fav_cite` varchar(500) DEFAULT NULL,
   `mem_events` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
