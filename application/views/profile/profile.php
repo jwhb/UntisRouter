@@ -23,7 +23,7 @@
 
                 <br />
                 <p>Fragebogen</p>
-                <hr style="margin-bottom: 2em;" />
+                <hr />
 
                 <?php /* echo form_label('Vorname', 'first_name')?>
 
@@ -53,55 +53,73 @@
 
                 <?php echo form_label('Meine Hobbies', 'fav_hobbies')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'fav_hobbies',
                     'id' => 'fav_hobbies',
-                    'value' => $user['fav_hobbies']
+                    'value' => $user['fav_hobbies'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
 
                 <?php echo form_label('Mein Kindheitsberufswunsch', 'fav_child_job')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'fav_child_job',
                     'id' => 'fav_child_job',
-                    'value' => $user['fav_child_job']
+                    'value' => $user['fav_child_job'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
 
                 <?php echo form_label('Mein Pl&auml;ne nach dem Abi', 'fav_occupation')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'fav_occupation',
                     'id' => 'fav_occupation',
-                    'value' => $user['fav_occupation']
+                    'value' => $user['fav_occupation'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
 
                 <?php echo form_label('Mein Lebensziel / Mein Berufswunsch', 'fav_lifegoal')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'fav_lifegoal',
                     'id' => 'fav_lifegoal',
-                    'value' => $user['fav_lifegoal']
+                    'value' => $user['fav_lifegoal'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
 
                 <?php echo form_label('Mein Lebensmotto / mein Lieblingszitat', 'fav_cite')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'fav_cite',
                     'id' => 'fav_cite',
-                    'value' => $user['fav_cite']
+                    'value' => $user['fav_cite'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
 
                 <?php echo form_label('Was mir von meiner Schulzeit in Erinnerung bleibt', 'mem_events')?>
 
-                <?php echo form_input(array(
+                <?php echo form_textarea(array(
                     'name' => 'mem_events',
                     'id' => 'mem_events',
-                    'value' => $user['mem_events']
+                    'value' => $user['mem_events'],
+                    'cols' => '50',
+                    'rows' => '4',
+                    'maxlength' => '200'
                 )); ?>
 
                 <br />
