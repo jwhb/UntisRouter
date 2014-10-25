@@ -29,11 +29,15 @@ class MY_Controller extends CI_Controller {
     $this->template->render();
   }
 
-  protected function get_user_data($show_subjects = false){
-      $user_data = $this->ion_auth->user()->row();
-      $this->load->model('subjects_model', 'subjects');
+  protected function get_user_data($username = '', $with_subjects = false, $with_comments = false){
+      $user_data = null;
+      if(!strlen($username)){
+          $user_data = $this->ion_auth->user()->row();
+      } else {
+		  $user_data = $this->ion_auth->where('username', $username)->users()->row();
+      }
+      
       if(sizeof($user_data)){
-          $subjects = $this->subjects->by_user_id($user_data->id);
           $user = array(
             'username' => $user_data->username,
             'id' => $user_data->id,
@@ -50,9 +54,13 @@ class MY_Controller extends CI_Controller {
             'fav_cite' => $user_data->fav_cite,
             'mem_events' => $user_data->mem_events
           );
-          if($show_subjects){
+          if($with_subjects){
               $this->load->model('subjects_model', 'subjects');
               $user['subjects'] = $this->subjects->by_user_id($user['id'], true);
+          }
+          if($with_comments){
+              $this->load->model('comments_model', 'comments');
+              $user['comments'] = $this->comments->by_user_id($user['id']);
           }
       } else {
           $user = array(

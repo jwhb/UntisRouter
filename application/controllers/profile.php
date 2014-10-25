@@ -9,11 +9,12 @@ class Profile extends MY_Controller{
   }
 
   public function index(){
+      // user's own profile
       if(!$this->ion_auth->logged_in()){
           redirect('auth/login', 'refresh');
       } else {
           $this->load->model('subjects_model', 'subjects');
-          $data['user'] = $this->get_user_data(true);
+          $data['user'] = $this->get_user_data('', true);
           $data['subjects'] = $this->subjects->get_subject_names();
           $this->set_title('Profil: ' . $data['user']['first_name'] . ' ' . $data['user']['last_name']);
 
@@ -22,11 +23,32 @@ class Profile extends MY_Controller{
       }
   }
 
+  public function view($name = ''){
+      // other user's profile
+      if(!$this->ion_auth->logged_in()){
+          redirect('auth/login', 'refresh');
+      } elseif(!strlen($name)) {
+          // redirect to user profile
+          redirect('profile', 'refresh');
+      } else {
+          $data['user'] = $this->get_user_data();
+          $data['other_user'] = $this->get_user_data($name, false, true);
+          if(isset($data['other_user']['first_name'])){
+              $this->set_title('Profil: ' . $data['other_user']['first_name'] . ' ' . $data['other_user']['last_name']);
+          } else {
+              $this->set_title('Profil nicht gefunden');
+          }
+
+          $this->template->write_view('content', 'profile/foreign', $data);
+          $this->template->render();
+      }
+  }
+
   public function update(){
       if($this->input->post('update-profile')){
         $this->load->model('ion_auth_model');
         $this->load->model('subjects_model', 'subjects');
-        $user = $this->get_user_data();
+        $user = $this->get_user_data('');
         $ch = array();
 
         $chk = function($ch, $user, $field){
