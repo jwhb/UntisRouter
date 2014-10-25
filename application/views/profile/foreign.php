@@ -1,4 +1,4 @@
-<?php if(sizeof($other_user['comments'] == 0)): ?>
+<?php if(!isset($other_user['comments']) || sizeof($other_user['comments'] == 0)): ?>
     <p>Keine Kommentare</p>
 <?php else: foreach($other_user['comments'] as $comment): ?>
     <div style="border: 1px solid blue; width: 20em; margin: 1em; padding: 0.5em;">
