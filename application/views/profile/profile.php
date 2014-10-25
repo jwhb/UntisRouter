@@ -2,7 +2,7 @@
 
               <?php echo form_fieldset(); ?>
 
-                <?php echo form_label('E-Mail', 'email')?>
+                <?php echo form_label('E-Mail', 'email'); ?>
 
                 <?php echo form_input(array(
                     'name' => 'email',
@@ -12,7 +12,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Neues Passwort', 'password')?>
+                <?php echo form_label('Neues Passwort', 'password'); ?>
 
                 <?php echo form_password(array(
                     'name' => 'password',
@@ -25,33 +25,14 @@
                 <p>Fragebogen</p>
                 <hr />
 
-                <?php /* echo form_label('Vorname', 'first_name')?>
 
-                <?php echo form_input(array(
-                    'name' => 'first_name',
-                    'placeholder' => 'Vorname',
-                    'id' => 'first_name',
-                    'value' => $user['first_name']
-                )); ?>
-
-
-                <?php echo form_label('Nachname', 'last_name')?>
-
-                <?php echo form_input(array(
-                    'name' => 'last_name',
-                    'placeholder' => 'Last Name',
-                    'id' => 'last_name',
-                    'value' => $user['last_name']
-                )); */ ?>
-
-
-                <?php echo form_label('Meine Lieblingsf&auml;cher', 'fav_subjects')?>
+                <?php echo form_label('Meine Lieblingsf&auml;cher', 'fav_subjects'); ?>
 
                 <?php $subject_count = sizeof($subjects);
                       echo form_multiselect('fav_subjects[]', $subjects, $user['subjects'], "size=\"$subject_count\""); ?>
 
 
-                <?php echo form_label('Meine Hobbies', 'fav_hobbies')?>
+                <?php echo form_label('Meine Hobbies', 'fav_hobbies'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'fav_hobbies',
@@ -63,7 +44,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Mein Kindheitsberufswunsch', 'fav_child_job')?>
+                <?php echo form_label('Mein Kindheitsberufswunsch', 'fav_child_job'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'fav_child_job',
@@ -75,7 +56,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Mein Pl&auml;ne nach dem Abi', 'fav_occupation')?>
+                <?php echo form_label('Mein Pl&auml;ne nach dem Abi', 'fav_occupation'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'fav_occupation',
@@ -87,7 +68,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Mein Lebensziel / Mein Berufswunsch', 'fav_lifegoal')?>
+                <?php echo form_label('Mein Lebensziel / Mein Berufswunsch', 'fav_lifegoal'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'fav_lifegoal',
@@ -99,7 +80,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Mein Lebensmotto / mein Lieblingszitat', 'fav_cite')?>
+                <?php echo form_label('Mein Lebensmotto / mein Lieblingszitat', 'fav_cite'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'fav_cite',
@@ -111,7 +92,7 @@
                 )); ?>
 
 
-                <?php echo form_label('Was mir von meiner Schulzeit in Erinnerung bleibt', 'mem_events')?>
+                <?php echo form_label('Was mir von meiner Schulzeit in Erinnerung bleibt', 'mem_events'); ?>
 
                 <?php echo form_textarea(array(
                     'name' => 'mem_events',
