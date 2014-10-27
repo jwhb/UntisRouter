@@ -81,6 +81,31 @@ class Profile extends MY_Controller{
       }
       redirect('profile', 'refresh');
   }
+  
+
+  public function list_users(){
+      if(!$this->ion_auth->logged_in()){
+          redirect('auth/login', 'refresh');
+      } else {
+          $data['user'] = $this->get_user_data();
+          
+          $this->load->model('ion_auth_model');
+          $users = array();
+          foreach($this->ion_auth_model->users()->result() as $user){
+              $users[] = array(
+                  'id' => $user->id,
+                  'username' => $user->username,
+                  'first_name' => $user->first_name,
+                  'last_name' => $user->last_name,
+              );
+          }
+          $data['users'] = $users;
+
+          $this->set_title('Nutzerliste');
+          $this->template->write_view('content', 'profile/user_list', $data);
+          $this->template->render();
+      }
+  }
 
   public function add_comment(){
       if($this->ion_auth->logged_in()){

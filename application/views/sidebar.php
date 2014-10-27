@@ -14,6 +14,7 @@
             <div class="pure-menu-separator"></div>
             <p><?php if(@$user['loggedin']): ?>
                 <i class="fa fa-user"></i> <?php echo anchor('profile', (isset($user['first_name']))? $user['first_name'] : ''); ?><br />
+                <i class="fa fa-users"></i> <?php echo anchor('profile/list_users', 'Alle Nutzer'); ?><br />
                 <i class="fa fa-sign-out"></i> <?php echo anchor('auth/logout', 'Logout'); ?>&nbsp;
                 <?php else: ?><i class="fa fa-sign-in"></i> <?php echo anchor('auth/login', lang('login_submit_btn')); endif; ?>
             </p>
