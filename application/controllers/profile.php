@@ -123,5 +123,19 @@ class Profile extends MY_Controller{
       }
       redirect('profile/view/' . $for_user->username, 'refresh');
   }
+
+  public function delete_comment($comment_id){
+      if($this->ion_auth->logged_in()){
+          $this->load->model('comments_model', 'comments');
+          $user = $this->get_user_data();
+          if(!$this->comments->may_alter($user['id'], $comment_id)){
+              echo("You must not delete others' comments!");
+              exit();
+          } else {
+              $this->comments->delete_comment($comment_id);
+          }
+      }
+      redirect('profile/list_users', 'refresh');
+  }
   
 }
