@@ -49,6 +49,38 @@
 	
 }
 
+
+/*******************/
+/* GRADES LAUNCHER */
+/*******************/
+
+.user_comment_single {
+	width: 340px;	
+	margin-bottom: 0.7em;
+}
+
+.user_comment_single_body {
+	color: #555;
+}
+
+.user_comment_single_header a {
+	color: #777;
+	text-decoration: none !important;
+}
+
+.user_comment_single_delete a.pure-button {
+	margin-top: 0.5em;
+}
+
+.user_comment_single_delete {
+	text-align: center;
+}
+
+.user_comment_add_box {
+	width: 410px;
+}
+
+
 /*******************/
 /* GRADES LAUNCHER */
 /*******************/

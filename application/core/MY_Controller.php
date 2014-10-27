@@ -30,29 +30,29 @@ class MY_Controller extends CI_Controller {
   }
 
   protected function get_user_data($username = '', $with_subjects = false, $with_comments = false){
-      $user_data = null;
+      $user = null;
       if(!strlen($username)){
-          $user_data = $this->ion_auth->user()->row();
+          $user = $this->ion_auth->user()->row();
       } else {
-		  $user_data = $this->ion_auth->where('username', $username)->users()->row();
+		  $user = $this->ion_auth->where('username', $username)->users()->row();
       }
       
-      if(sizeof($user_data)){
+      if(sizeof($user)){
           $user = array(
-            'username' => $user_data->username,
-            'id' => $user_data->id,
-            'loggedin' => $user_data->active,
-            'email' => $user_data->email,
-            'first_name' => $user_data->first_name,
-            'last_name' => $user_data->last_name,
+            'username' => $user->username,
+            'id' => $user->id,
+            'loggedin' => $user->active,
+            'email' => $user->email,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
 
-            'fav_subjects' => $user_data->fav_subjects,
-            'fav_hobbies' => $user_data->fav_hobbies,
-            'fav_child_job' => $user_data->fav_child_job,
-            'fav_occupation' => $user_data->fav_occupation,
-            'fav_lifegoal' => $user_data->fav_lifegoal,
-            'fav_cite' => $user_data->fav_cite,
-            'mem_events' => $user_data->mem_events
+            'fav_subjects' => $user->fav_subjects,
+            'fav_hobbies' => $user->fav_hobbies,
+            'fav_child_job' => $user->fav_child_job,
+            'fav_occupation' => $user->fav_occupation,
+            'fav_lifegoal' => $user->fav_lifegoal,
+            'fav_cite' => $user->fav_cite,
+            'mem_events' => $user->mem_events
           );
           if($with_subjects){
               $this->load->model('subjects_model', 'subjects');

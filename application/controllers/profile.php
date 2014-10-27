@@ -45,40 +45,58 @@ class Profile extends MY_Controller{
   }
 
   public function update(){
-      if($this->input->post('update-profile')){
-        $this->load->model('ion_auth_model');
-        $this->load->model('subjects_model', 'subjects');
-        $user = $this->get_user_data('');
-        $ch = array();
-
-        $chk = function($ch, $user, $field){
-          $new_val = $this->input->post($field);
-          if($new_val !== false && $new_val != $user[$field]){
-            $ch[$field] = $new_val;
+      if($this->ion_auth->logged_in()){
+          if($this->input->post('update-profile')){
+              $this->load->model('ion_auth_model');
+              $this->load->model('subjects_model', 'subjects');
+              $user = $this->get_user_data();
+              $ch = array();
+      
+              $chk = function($ch, $user, $field){
+                  $new_val = $this->input->post($field);
+                  if($new_val !== false && $new_val != $user[$field]){
+                      $ch[$field] = $new_val;
+                  }
+                  return $ch;
+              };
+      
+              $ch = $chk($ch, $user, 'first_name');
+              $ch = $chk($ch, $user, 'last_name');
+              $ch = $chk($ch, $user, 'email');
+              $ch = $chk($ch, $user, 'fav_hobbies');
+              $ch = $chk($ch, $user, 'fav_child_job');
+              $ch = $chk($ch, $user, 'fav_occupation');
+              $ch = $chk($ch, $user, 'fav_lifegoal');
+              $ch = $chk($ch, $user, 'fav_cite');
+              $ch = $chk($ch, $user, 'mem_events');
+              if(sizeof($ch)){
+                  $this->ion_auth_model->update($user['id'], $ch);
+              }
+      
+              $sel_subjects = $this->input->post('fav_subjects');
+              if($sel_subjects != $user['fav_subjects']){
+                  $this->subjects->update_user_subjects($user['id'], $sel_subjects);
+              }
           }
-          return $ch;
-        };
-
-        $ch = $chk($ch, $user, 'first_name');
-        $ch = $chk($ch, $user, 'last_name');
-        $ch = $chk($ch, $user, 'email');
-        $ch = $chk($ch, $user, 'fav_hobbies');
-        $ch = $chk($ch, $user, 'fav_child_job');
-        $ch = $chk($ch, $user, 'fav_occupation');
-        $ch = $chk($ch, $user, 'fav_lifegoal');
-        $ch = $chk($ch, $user, 'fav_cite');
-        $ch = $chk($ch, $user, 'mem_events');
-        if(sizeof($ch)){
-          $this->ion_auth_model->update($user['id'], $ch);
-        }
-
-        $sel_subjects = $this->input->post('fav_subjects');
-        if($sel_subjects != $user['fav_subjects']){
-          $this->subjects->update_user_subjects($user['id'], $sel_subjects);
-        }
       }
-
       redirect('profile', 'refresh');
   }
 
+  public function add_comment(){
+      if($this->ion_auth->logged_in()){
+          if($this->input->post('add-comment')){
+              $this->load->model('ion_auth_model');
+              $this->load->model('comments_model', 'comments');
+              $user = $this->get_user_data();
+              $for_user = $this->ion_auth->user($this->input->post('for_user'))->row();
+              $comment = $this->input->post('comment');
+
+              if(strlen($comment)){
+                  $this->comments->add_comment($user['id'], $for_user->id, $comment);
+              }
+          }
+      }
+      redirect('profile/view/' . $for_user->username, 'refresh');
+  }
+  
 }

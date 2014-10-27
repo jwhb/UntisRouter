@@ -1,23 +1,30 @@
 <?php
 if(!isset($other_user['first_name'])): ?>
 Der gew&uuml;nschte Benutzer wurde nicht gefunden.
-<?php else: if(!isset($other_user['comments']) || sizeof($other_user['comments'] == 0)): ?>
+<?php else: if(!isset($other_user['comments']) || sizeof($other_user['comments']) == 0): ?>
     <p>(noch) keine Kommentare vorhanden</p>
 <?php else: foreach($other_user['comments'] as $comment): ?>
-    <div style="border: 1px solid blue; width: 20em; margin: 1em; padding: 0.5em;">
-        From <?php print($comment->id); ?><br />
-        <?php
-            $date = new DateTime();
-            $date->setTimestamp($comment->time);
-            print($date->format("d.m.Y, t"));
-        ?>
-        <hr />
-        <div style="font-size: 1.3em;"><?php print($comment->text); ?></div>
-    </div>
+    <table class="pure-table pure-table-bordered user_comment_single">
+      <tbody>
+        <tr class="user_comment_single_header">
+            <td style="border-right-width: 0px;"><?php $name = $comment->username_from; echo anchor("profile/view/$name", $name); ?></td>
+            <td style="border-left-width: 0px;" align="right"><?php
+                $date = new DateTime();
+                $date->setTimestamp($comment->time);
+                print($date->format("d.m.Y, H:i"));
+            ?></td>
+        </tr>
+        <tr class="user_comment_single_body">
+            <td colspan="2"><?php print($comment->text); ?><?php
+                if($user['id'] == $comment->user_from_id): ?> 
+                <div class="user_comment_single_delete"><?php $c_id = $comment->id; echo anchor("profile/delete_comment/$c_id", 'entfernen', array('class' => 'pure-button'));?></div>
+            <?php endif; ?></td>
+        </tr>
+      </tbody>
+    </table>
 <?php endforeach; endif; ?>
 
-<hr />
-<?php echo form_open('profile/add_comment', array('class' => 'pure-form pure-form-stacked')); ?> 
+<?php echo form_open('profile/add_comment', array('class' => 'pure-form pure-form-stacked user_comment_add_box')); ?> 
     <?php echo form_fieldset(); ?> 
         <legend>Neuen Kommentar schreiben</legend>
 
@@ -29,6 +36,7 @@ Der gew&uuml;nschte Benutzer wurde nicht gefunden.
             'rows' => '2',
             'maxlength' => '400'
         )); ?> 
+        <?php echo form_hidden('for_user', $other_user['id']); ?> 
         <?php echo form_submit(array('class' => 'pure-button pure-button-primary', 'name' => 'add-comment', 'value' => 'absenden' )); ?> 
     <?php echo form_fieldset_close(); ?> 
 </form>
