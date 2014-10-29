@@ -8,7 +8,8 @@
                     'name' => 'email',
                     'placeholder' => 'username@example.org',
                     'id' => 'email',
-                    'value' => $user['email']
+                    'value' => $user['email'],
+                    'required' => '1'
                 )); ?>
 
 
