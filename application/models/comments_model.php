@@ -15,13 +15,14 @@ class Comments_model extends MY_Model {
         return $comments;
     }
 
-    public function add_comment($user_from_id, $user_for_id, $comment_text) {
+    public function add_comment($user_from_id, $user_for_id, $comment_text, $hidden) {
         $user_from_id = mysql_real_escape_string($user_from_id);
         $user_for_id = mysql_real_escape_string($user_for_id);
         $comment_text = mysql_real_escape_string($comment_text);
+        $hidden = mysql_real_escape_string($hidden);
         
         $time = (new DateTime())->getTimestamp();
-        $query = $this->db->query("INSERT INTO users_comments (user_from_id, user_for_id, time, text) VALUES ($user_from_id, $user_for_id, $time, '$comment_text')");
+        $query = $this->db->query("INSERT INTO users_comments (user_from_id, user_for_id, time, text, hidden) VALUES ($user_from_id, $user_for_id, $time, '$comment_text', '$hidden')");
     }
 
     public function delete_comment($comment_id) {

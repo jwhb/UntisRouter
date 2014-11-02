@@ -115,9 +115,10 @@ class Profile extends MY_Controller{
               $user = $this->get_user_data();
               $for_user = $this->ion_auth->user($this->input->post('for_user'))->row();
               $comment = $this->input->post('comment');
+              $hidden = $this->input->post('hidden') == 'hidden';
 
               if(strlen($comment)){
-                  $this->comments->add_comment($user['id'], $for_user->id, $comment);
+                  $this->comments->add_comment($user['id'], $for_user->id, $comment, $hidden);
               }
           }
       }
