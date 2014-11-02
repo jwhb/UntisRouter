@@ -38,10 +38,12 @@ class MY_Controller extends CI_Controller {
       }
       
       if(sizeof($user)){
+          $is_mod = $this->ion_auth->in_group('moderators', $user->id) || $this->ion_auth->in_group('admin', $user->id);
           $user = array(
             'username' => $user->username,
             'id' => $user->id,
             'loggedin' => $user->active,
+            'is_mod' => $is_mod,
             'email' => $user->email,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
