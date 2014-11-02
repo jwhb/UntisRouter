@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `users_comments` (
   `user_from_id` int(11) NOT NULL,
   `text` varchar(400) NOT NULL,
   `time` int(11) NOT NULL,
-  `anon` tinyint(1) NOT NULL DEFAULT '0',
+  `hidden` tinyint(1) NOT NULL DEFAULT '0',
   `deleted` tinyint(1) DEFAULT '0',
   `deleted_at` int(10) unsigned DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
