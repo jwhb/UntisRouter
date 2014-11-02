@@ -52,8 +52,13 @@ class Profile extends MY_Controller{
               $this->load->model('ion_auth_model');
               $this->load->model('subjects_model', 'subjects');
               $user = $this->get_user_data();
+              
+              if(strlen($this->input->post('old_password')) >= 8 && strlen($this->input->post('new_password')) >= 8){
+                  $identity = $user[$this->ion_auth_model->identity_column];
+                  $this->ion_auth_model->change_password($identity, $this->input->post('old_password'), $this->input->post('new_password'));
+              }
+              
               $ch = array();
-      
               $chk = function($ch, $user, $field){
                   $new_val = $this->input->post($field);
                   if($new_val !== false && $new_val != $user[$field]){

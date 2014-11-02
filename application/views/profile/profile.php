@@ -9,13 +9,24 @@
                     'required' => '1'
                 )); ?> 
 
-                <?php echo form_label('Neues Passwort', 'password'); ?> 
+                <?php echo form_label('Altes Passwort', 'old_password'); ?> 
                 <?php echo form_password(array(
-                    'name' => 'password',
-                    'id' => 'password',
-                    'placeholder' => '(wenn &Auml;nderung gew&uuml;nscht)',
-                    'disabled' => true
+                    'name' => 'old_password',
+                    'id' => 'old_password',
+                    'placeholder' => '(bei Passwort&auml;nderung)',
+                    'pattern' => '.{8,}',
+                    'title' => 'mindestens 8 Zeichen'
                 )); ?> 
+
+                <?php echo form_label('Neues Passwort', 'new_password'); ?> 
+                <?php echo form_password(array(
+                    'name' => 'new_password',
+                    'id' => 'new_password',
+                    'placeholder' => '(bei Passwort&auml;nderung)',
+                    'pattern' => '.{8,}',
+                    'title' => 'mindestens 8 Zeichen'
+                )); ?> 
+                
 
                 <p><br />Fragebogen</p><hr />
 
