@@ -25,6 +25,11 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   `time` int(11) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `mottos` (
+`id` int(10) unsigned NOT NULL,
+  `text` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 CREATE TABLE IF NOT EXISTS `subjects` (
 `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
@@ -77,11 +82,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fav_occupation` varchar(200) DEFAULT NULL,
   `fav_lifegoal` varchar(200) DEFAULT NULL,
   `fav_cite` varchar(200) DEFAULT NULL,
-  `mem_events` varchar(200) DEFAULT NULL
+  `mem_events` varchar(200) DEFAULT NULL,
+  `fav_abimotto` tinyint(3) unsigned DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`) VALUES
-(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, '', , , 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`) VALUES
+(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, '', , , 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, ),
 
 CREATE TABLE IF NOT EXISTS `users_comments` (
 `id` int(11) NOT NULL,
@@ -92,18 +98,19 @@ CREATE TABLE IF NOT EXISTS `users_comments` (
   `hidden` tinyint(1) NOT NULL DEFAULT '0',
   `deleted` tinyint(1) DEFAULT '0',
   `deleted_at` int(10) unsigned DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
+(4, 2, 2);
 
 CREATE TABLE IF NOT EXISTS `users_subjects` (
 `id` int(11) NOT NULL,
@@ -116,6 +123,9 @@ ALTER TABLE `groups`
  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `login_attempts`
+ ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `mottos`
  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `subjects`
@@ -144,6 +154,8 @@ ALTER TABLE `groups`
 MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 ALTER TABLE `login_attempts`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+ALTER TABLE `mottos`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `subjects`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `substitutions`
@@ -153,7 +165,7 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `users`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `users_comments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `users_groups`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 ALTER TABLE `users_subjects`

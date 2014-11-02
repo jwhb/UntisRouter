@@ -14,8 +14,10 @@ class Profile extends MY_Controller{
           redirect('auth/login', 'refresh');
       } else {
           $this->load->model('subjects_model', 'subjects');
+          $this->load->model('mottos_model', 'mottos');
           $data['user'] = $this->get_user_data('', true);
           $data['subjects'] = $this->subjects->get_subject_names();
+          $data['mottos'] = $this->mottos->get_motto_names();
           $this->set_title('Profil: ' . $data['user']['first_name'] . ' ' . $data['user']['last_name']);
 
           $this->template->write_view('content', 'profile/profile', $data);
@@ -69,6 +71,7 @@ class Profile extends MY_Controller{
               $ch = $chk($ch, $user, 'fav_lifegoal');
               $ch = $chk($ch, $user, 'fav_cite');
               $ch = $chk($ch, $user, 'mem_events');
+              $ch = $chk($ch, $user, 'fav_abimotto');
               if(sizeof($ch)){
                   $this->ion_auth_model->update($user['id'], $ch);
               }

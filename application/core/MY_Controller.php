@@ -54,7 +54,8 @@ class MY_Controller extends CI_Controller {
             'fav_occupation' => $user->fav_occupation,
             'fav_lifegoal' => $user->fav_lifegoal,
             'fav_cite' => $user->fav_cite,
-            'mem_events' => $user->mem_events
+            'mem_events' => $user->mem_events,
+            'fav_abimotto' => $user->fav_abimotto
           );
           if($with_subjects){
               $this->load->model('subjects_model', 'subjects');
