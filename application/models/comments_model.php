@@ -33,8 +33,11 @@ class Comments_model extends MY_Model {
         $user_id = mysql_real_escape_string($user_id);
         $comment_id = mysql_real_escape_string($comment_id);
         
+        $this->load->library('ion_auth');
+        $is_mod = $this->ion_auth->in_group('moderator', $user_id) || $this->ion_auth->in_group('admin', $user_id);
+        
         $query = $this->db->query("SELECT * FROM users_comments WHERE id = '$comment_id'");
         $comment = $query->row();
-        return($comment->user_from_id == $user_id);
+        return($comment->user_from_id == $user_id || $is_mod);
     }
 }
