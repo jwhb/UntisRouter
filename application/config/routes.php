@@ -44,6 +44,8 @@ $route['404_override'] = '';
 $route['static'] = "staticpage";
 $route['static/(:any)'] = "staticpage/$1";
 
+$route['login'] = "auth/login";
+
 $route['EF'] = "grades/EF";
 $route['Q1'] = "grades/Q1";
 $route['Q2'] = "grades/Q2";
