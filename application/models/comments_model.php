@@ -18,7 +18,7 @@ class Comments_model extends MY_Model {
     public function add_comment($user_from_id, $user_for_id, $comment_text, $hidden) {
         $user_from_id = mysql_real_escape_string($user_from_id);
         $user_for_id = mysql_real_escape_string($user_for_id);
-        $comment_text = mysql_real_escape_string($comment_text);
+        $comment_text = mysql_real_escape_string(strip_tags($comment_text));
         $hidden = mysql_real_escape_string($hidden);
         
         $time = (new DateTime())->getTimestamp();
