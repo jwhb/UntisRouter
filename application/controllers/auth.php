@@ -509,8 +509,7 @@ class Auth extends MY_Controller {
 		//validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('username', $this->lang->line('forgot_password_username_identity_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
 		if (isset($_POST) && !empty($_POST))
@@ -524,8 +523,7 @@ class Auth extends MY_Controller {
 			$data = array(
 				'first_name' => $this->input->post('first_name'),
 				'last_name'  => $this->input->post('last_name'),
-				'company'    => $this->input->post('company'),
-				'phone'      => $this->input->post('phone'),
+				'username'  => $this->input->post('username'),
 			);
 
 			// Only allow updating groups if user is admin
@@ -595,17 +593,11 @@ class Auth extends MY_Controller {
 			'type'  => 'text',
 			'value' => $this->form_validation->set_value('last_name', $user->last_name),
 		);
-		$this->data['company'] = array(
-			'name'  => 'company',
-			'id'    => 'company',
+		$this->data['username'] = array(
+			'name'  => 'username',
+			'id'    => 'username',
 			'type'  => 'text',
-			'value' => $this->form_validation->set_value('company', $user->company),
-		);
-		$this->data['phone'] = array(
-			'name'  => 'phone',
-			'id'    => 'phone',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('phone', $user->phone),
+			'value' => $this->form_validation->set_value('username', $user->username),
 		);
 		$this->data['password'] = array(
 			'name' => 'password',

@@ -6,8 +6,10 @@
                     'placeholder' => 'username@example.org',
                     'id' => 'email',
                     'value' => $user['email'],
+                    'pattern' => '[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}',
+                    'title' => 'g&uuml;ltige E-Mail',
                     'required' => '1'
-                )); ?> 
+                )); ?>
 
                 <?php echo form_label('Altes Passwort', 'old_password'); ?> 
                 <?php echo form_password(array(
