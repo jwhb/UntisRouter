@@ -15,13 +15,8 @@
       </p>
 
       <p>
-            <?php echo lang('edit_user_company_label', 'company');?> <br />
-            <?php echo form_input($company);?>
-      </p>
-
-      <p>
-            <?php echo lang('edit_user_phone_label', 'phone');?> <br />
-            <?php echo form_input($phone);?>
+            <?php echo lang('forgot_password_username_identity_label', 'username');?> <br />
+            <?php echo form_input($username);?>
       </p>
 
       <p>
