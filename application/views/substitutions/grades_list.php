@@ -23,3 +23,6 @@
   <?php endforeach; ?>
 </div>
 <?php endif; ?>
+
+<h2 style="margin-top: 2em;">Projektstatus</h2>
+<iframe src="http://nlalonde.github.com/commits-widget/index.html?owner=JWhy&repo=UntisRouter&limit=6&width=500&height=215" width="502px" height="217px"></iframe>
