@@ -50,10 +50,17 @@
 	position: absolute;
 }
 
-.infoMessage {
-	
+#infoMessage:not(:empty) {
+	border-radius: 4px;
+	border: 1px solid gray;
+	padding: 0.5em;
+	width: 410px;
+	margin: 0.5em;
 }
 
+#infoMessage p {
+	margin: 0.2em;
+}
 
 /*******************/
 /* GRADES LAUNCHER */
