@@ -1,4 +1,5 @@
 <div class="photo_upload_box">
+    <h2>Einschulungsfoto</h2>
     <img id="userphoto1" src="<?php echo $this->config->base_url('assets/img/user_photos/' .
         ((!is_null($user['photo1_id']))? $user['photo1_id'] : 'placeholder.png')
         ); ?>" alt="User Image 1" height="514px" width="400px"/>
@@ -13,6 +14,7 @@
 <hr />
 
 <div class="photo_upload_box">
+    <h2>Aktuelles Foto</h2>
     <img id="userphoto2" src="<?php echo $this->config->base_url('assets/img/user_photos/' .
     ((!is_null($user['photo2_id']))? $user['photo2_id'] : 'placeholder.png')
     ); ?>" alt="User Image 2" height="514px" width="400px"/>
