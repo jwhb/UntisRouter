@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    Passwort (Geburtsdatum):
+    Passwort:
     <?php echo form_input($password);?>
   </p>
 
