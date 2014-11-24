@@ -177,15 +177,17 @@ class Profile extends MY_Controller{
         $fileName = $_FILES['file']['name'];
         $rand = uniqid();
         $dest_file = "$username-$id-$rand.jpg";
-        $folder_prefix = getcwd() . ds . 'assets' . ds . 'img' . ds . 'user_photos' . ds;
+        $dir = getcwd() . ds;
+        $folder_prefix = 'assets' . ds . 'img' . ds . 'user_photos' . ds;
         $dest =  $folder_prefix . $dest_file;
         if(!move_uploaded_file($_FILES['file']['tmp_name'], $dest)) {
           $this->output->set_status_header(500, 'Could not process uploaded file.');
           return false;
         } else {
-          unlink($folder_prefix . $user['photo' . $id . '_id']);
+          unlink($dir . $folder_prefix . $user['photo' . $id . '_id']);
           $this->load->model('ion_auth_model');
           $this->ion_auth_model->update($user['id'], array('photo' . $id . '_id' => $dest_file));
+          echo htmlentities(str_replace(ds, '/', $this->config->base_url($dest)));
         }
     }
   }

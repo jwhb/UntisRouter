@@ -1,20 +1,32 @@
-<ul id="filelist1"></ul>
-<br /> 
-<div id="container">
-    <a id="browse1" href="javascript:;">Foto 1 ausw&auml;hlen</a>
-    <a id="start-upload1" href="javascript:;">hochladen</a>
+<div class="photo_upload_box">
+    <img id="userphoto1" src="<?php echo $this->config->base_url('assets/img/user_photos/' .
+        ((!is_null($user['photo1_id']))? $user['photo1_id'] : 'placeholder.png')
+        ); ?>" alt="User Image 1" height="514px" width="400px"/>
+
+    <ul id="filelist1"></ul>
+    <div id="container">
+        <a id="browse1" href="javascript:;">Foto 1 ausw&auml;hlen</a>
+        <a id="start-upload1" href="javascript:;">hochladen</a>
+    </div>
 </div>
 
-<ul id="filelist2"></ul>
-<br />
-<div id="container">
-    <a id="browse2" href="javascript:;">Foto 2 ausw&auml;hlen</a>
-    <a id="start-upload2" href="javascript:;">hochladen</a>
+<hr />
+
+<div class="photo_upload_box">
+    <img id="userphoto2" src="<?php echo $this->config->base_url('assets/img/user_photos/' .
+    ((!is_null($user['photo2_id']))? $user['photo2_id'] : 'placeholder.png')
+    ); ?>" alt="User Image 2" height="514px" width="400px"/>
+
+    <ul id="filelist2"></ul>
+    <div id="container">
+        <a id="browse2" href="javascript:;">Foto 2 ausw&auml;hlen</a>
+        <a id="start-upload2" href="javascript:;">hochladen</a>
+    </div>
 </div>
-<br />
+
 <pre id="console"></pre>
  
-<script src="<?php echo $this->config->base_url(); ?>assets/js/plupload.full.min.js"></script>
+<script src="<?php echo $this->config->base_url('assets/js/plupload.full.min.js'); ?>"></script>
 <script type="text/javascript">
 function setup_uploader(uploader, id){
     uploader.init();
@@ -33,6 +45,10 @@ function setup_uploader(uploader, id){
     };
     uploader.bind('Error', function(up, err) {
       document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+    });
+    uploader.bind('FileUploaded', function(up, err, response) {
+        img_url = response.response;
+        document.getElementById('userphoto' + id).src = img_url;
     });
 }
 
@@ -63,6 +79,13 @@ var uploader2 = new plupload.Uploader({
     width: 400,
     height: 514,
     crop: true
+  },
+  filters: {
+    mime_types : [
+      { title : "Image files", extensions : "jpg" }
+    ],
+    max_file_size: "5mb",
+    prevent_duplicates: true
   }
 });
 setup_uploader(uploader2, 2);
