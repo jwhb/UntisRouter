@@ -83,11 +83,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fav_lifegoal` varchar(200) DEFAULT NULL,
   `fav_cite` varchar(200) DEFAULT NULL,
   `mem_events` varchar(200) DEFAULT NULL,
-  `fav_abimotto` tinyint(3) unsigned DEFAULT NULL
+  `fav_abimotto` tinyint(3) unsigned DEFAULT NULL,
+  `photo1_id` varchar(64) DEFAULT NULL,
+  `photo2_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`) VALUES
-(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, '', , , 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, ),
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`, `photo1_id`, `photo2_id`) VALUES
+(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, '', , , 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 
 CREATE TABLE IF NOT EXISTS `users_comments` (
 `id` int(11) NOT NULL,
