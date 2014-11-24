@@ -29,6 +29,11 @@ class MY_Controller extends CI_Controller {
     $this->template->render();
   }
 
+  protected function get_photo_url($photo_id){
+    $this->load->helper('url');
+    return(site_url("assets/img/user_photos/$photo_id"));
+  }
+
   protected function get_user_data($username = '', $with_subjects = false, $with_comments = false){
       $user = null;
       if(!strlen($username)){
@@ -55,7 +60,11 @@ class MY_Controller extends CI_Controller {
             'fav_lifegoal' => $user->fav_lifegoal,
             'fav_cite' => $user->fav_cite,
             'mem_events' => $user->mem_events,
-            'fav_abimotto' => $user->fav_abimotto
+            'fav_abimotto' => $user->fav_abimotto,
+            'photo1_id' => $user->photo1_id,
+            'photo2_id' => $user->photo2_id,
+            'photo1_url' => (strlen($user->photo1_id))? $this->get_photo_url($user->photo1_id) : false,
+            'photo2_url' => (strlen($user->photo2_id))? $this->get_photo_url($user->photo2_id) : false
           );
           if($with_subjects){
               $this->load->model('subjects_model', 'subjects');

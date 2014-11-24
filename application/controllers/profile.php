@@ -146,5 +146,47 @@ class Profile extends MY_Controller{
       }
       redirect('profile/list_users', 'refresh');
   }
-  
+
+  public function photos(){
+      if(!$this->ion_auth->logged_in()){
+          redirect('auth/login', 'refresh');
+      } else {
+          $data['user'] = $this->get_user_data();
+          
+          $this->set_title('Nutzerliste');
+          $this->template->write_view('content', 'profile/photos', $data);
+          $this->template->render();
+      }
+  }
+
+  public function upload_photo($id){
+    if(!$this->ion_auth->logged_in()){
+      redirect('auth/login', 'refresh');
+    } elseif($id != 1 && $id != 2) {
+      $this->output->set_status_header(400, 'Invalid file id.');
+      return false;
+    } elseif(empty($_FILES) || $_FILES["file"]["error"]) {
+      $this->output->set_status_header(402, 'No files received.');
+      return false;
+    } else {
+        $user = $this->get_user_data();
+        $username = $user['username'];
+
+        define('ds', DIRECTORY_SEPARATOR);
+
+        $fileName = $_FILES['file']['name'];
+        $rand = uniqid();
+        $dest_file = "$username-$id-$rand.jpg";
+        $folder_prefix = getcwd() . ds . 'assets' . ds . 'img' . ds . 'user_photos' . ds;
+        $dest =  $folder_prefix . $dest_file;
+        if(!move_uploaded_file($_FILES['file']['tmp_name'], $dest)) {
+          $this->output->set_status_header(500, 'Could not process uploaded file.');
+          return false;
+        } else {
+          unlink($folder_prefix . $user['photo' . $id . '_id']);
+          $this->load->model('ion_auth_model');
+          $this->ion_auth_model->update($user['id'], array('photo' . $id . '_id' => $dest_file));
+        }
+    }
+  }
 }
