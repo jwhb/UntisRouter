@@ -153,7 +153,7 @@ class Profile extends MY_Controller{
       } else {
           $data['user'] = $this->get_user_data();
           
-          $this->set_title('Nutzerliste');
+          $this->set_title('Meine Fotos');
           $this->template->write_view('content', 'profile/photos', $data);
           $this->template->render();
       }
