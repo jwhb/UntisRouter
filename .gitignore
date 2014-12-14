@@ -9,6 +9,8 @@ robots.txt
 
 assets/export/*
 !assets/export/.empty
+assets/img/user_photos/*
+!assets/img/user_photos/.empty
 
 application/cache/*
 !application/cache/index.html
