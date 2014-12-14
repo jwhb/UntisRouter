@@ -1,8 +1,10 @@
-        <?php if(!isset($other_user['first_name'])): ?>
+        <?php 
+        $has_comments = (isset($other_user['comments']) && sizeof($other_user['comments']) != 0);
+        
+        if(!isset($other_user['first_name'])): ?>
             <p>Der gew&uuml;nschte Benutzer wurde nicht gefunden.</p>
-        <?php elseif(!isset($other_user['comments']) || sizeof($other_user['comments']) == 0): ?>
-            <p>(noch) keine Kommentare vorhanden</p>
-        <?php else: echo form_open('profile/add_comment', array('class' => 'pure-form pure-form-stacked user_comment_add_box')); ?> 
+        <?php else:
+            echo form_open('profile/add_comment', array('class' => 'pure-form pure-form-stacked user_comment_add_box')); ?> 
             <?php echo form_fieldset(); ?> 
                 <legend>Assoziation hinzuf&uuml;gen</legend>
                 <?php echo form_textarea(array(
@@ -20,8 +22,10 @@
                     <?php echo form_label('<i class="fa fa-eye-slash"></i> anonym', 'hidden', array('style' => 'display: inline')); ?> 
                 </div>
             <?php echo form_fieldset_close(); ?> 
-        <?php echo form_close(); ?> 
-        
+        <?php echo form_close();             
+            if(!$has_comments): ?>
+            <p>(noch) keine Kommentare vorhanden</p>
+        <?php else: ?>       
         <hr style="margin-bottom: 2em;" />
         
         <?php foreach($other_user['comments'] as $comment): ?>
@@ -43,4 +47,4 @@
                 </td>
             </tr>
           </tbody>
-        </table><?php endforeach; endif; ?> 
+        </table><?php endforeach; endif; endif; ?> 
