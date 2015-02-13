@@ -88,8 +88,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `photo2_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`, `photo1_id`, `photo2_id`) VALUES
-(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, '', , , 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`, `photo1_id`, `photo2_id`) VALUES (1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', NULL, 'admin@admin.com', NULL, NULL, NULL, NULL, 0, 1, 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
 
 CREATE TABLE IF NOT EXISTS `users_comments` (
 `id` int(11) NOT NULL,
@@ -172,10 +171,6 @@ ALTER TABLE `users_groups`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 ALTER TABLE `users_subjects`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `users_groups`
-ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
