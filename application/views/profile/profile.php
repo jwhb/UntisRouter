@@ -95,13 +95,6 @@
                     'rows' => '4',
                     'maxlength' => '200'
                 )); ?> 
-
-                <?php echo form_label('Motto', 'fav_abimotto'); ?> 
-                <?php foreach($mottos as $m_id=>$motto): 
-                  $data = array('name' => 'fav_abimotto', 'id' => "fav_abimotto_$m_id", 'value' => $m_id);
-                  if($user['fav_abimotto'] == $m_id) $data['checked'] = true;
-                  echo form_radio($data) . " $motto"; ?><br />
-                <?php endforeach; ?> 
                 <br />
                 
                 <?php echo form_submit(array('class' => 'pure-button pure-button-primary', 'name' => 'update-profile', 'value' => 'Update Profile' )); ?> 

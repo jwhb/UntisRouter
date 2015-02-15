@@ -25,11 +25,6 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   `time` int(11) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `mottos` (
-`id` int(10) unsigned NOT NULL,
-  `text` tinytext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `subjects` (
 `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
@@ -83,12 +78,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fav_lifegoal` varchar(200) DEFAULT NULL,
   `fav_cite` varchar(200) DEFAULT NULL,
   `mem_events` varchar(200) DEFAULT NULL,
-  `fav_abimotto` tinyint(3) unsigned DEFAULT NULL,
   `photo1_id` varchar(64) DEFAULT NULL,
   `photo2_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`, `photo1_id`, `photo2_id`) VALUES (1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', NULL, 'admin@admin.com', NULL, NULL, NULL, NULL, 0, 1, 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `photo1_id`, `photo2_id`) VALUES (1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', NULL, 'admin@admin.com', NULL, NULL, NULL, NULL, 0, 1, 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
 
 CREATE TABLE IF NOT EXISTS `users_comments` (
 `id` int(11) NOT NULL,
@@ -126,9 +120,6 @@ ALTER TABLE `groups`
 ALTER TABLE `login_attempts`
  ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `mottos`
- ADD PRIMARY KEY (`id`);
-
 ALTER TABLE `subjects`
  ADD PRIMARY KEY (`id`);
 
@@ -155,12 +146,10 @@ ALTER TABLE `groups`
 MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 ALTER TABLE `login_attempts`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
-ALTER TABLE `mottos`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `subjects`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `substitutions`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `subst_texts`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `users`
