@@ -5,3 +5,5 @@ RewriteCond $1 !^(assets)
 RewriteRule ^.*$ index.php/$0
 
 Header set Access-Control-Allow-Origin "*"
+
+Options SymLinksIfOwnerMatch
