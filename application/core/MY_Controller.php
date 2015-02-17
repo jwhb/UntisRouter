@@ -42,6 +42,8 @@ class MY_Controller extends CI_Controller {
 		  $user = $this->ion_auth->where('username', $username)->users()->row();
       }
       
+      $questions = $this->config->item('questions');
+      
       if(sizeof($user)){
           $is_mod = $this->ion_auth->in_group('moderators', $user->id) || $this->ion_auth->in_group('admin', $user->id);
           $user = array(
@@ -64,7 +66,15 @@ class MY_Controller extends CI_Controller {
             'photo1_id' => $user->photo1_id,
             'photo2_id' => $user->photo2_id,
             'photo1_url' => (strlen($user->photo1_id))? $this->get_photo_url($user->photo1_id) : false,
-            'photo2_url' => (strlen($user->photo2_id))? $this->get_photo_url($user->photo2_id) : false
+            'photo2_url' => (strlen($user->photo2_id))? $this->get_photo_url($user->photo2_id) : false,
+          		
+          	'questions' => array(
+          		1 => array('q' => $user->q1_q, 'a' => $user->q1_a, 't' => $questions[$user->q1_q]),
+          		2 => array('q' => $user->q2_q, 'a' => $user->q2_a, 't' => $questions[$user->q2_q]),
+          		3 => array('q' => $user->q3_q, 'a' => $user->q3_a, 't' => $questions[$user->q3_q]),
+          		4 => array('q' => $user->q4_q, 'a' => $user->q4_a, 't' => $questions[$user->q4_q]),
+          		5 => array('q' => $user->q5_q, 'a' => $user->q5_a, 't' => $questions[$user->q5_q]),
+          	)
           );
           if($with_subjects){
               $this->load->model('subjects_model', 'subjects');

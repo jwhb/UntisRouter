@@ -1,3 +1,4 @@
+            <?php $questions = $this->config->item('questions'); ?> 
             <?php echo form_open('profile/update', array('class' => 'pure-form pure-form-stacked profile-form')); ?> 
               <?php echo form_fieldset(); ?> 
                 <?php echo form_label('E-Mail', 'email'); ?> 
@@ -30,70 +31,61 @@
                 )); ?> 
                 
 
-                <p><br />Fragebogen</p><hr />
+                <br /><p>Fragebogen</p><hr />
 
-                <?php echo form_label('Meine Lieblingsf&auml;cher', 'fav_subjects'); ?> 
-                <?php $subject_count = sizeof($subjects);
-                      echo form_multiselect('fav_subjects[]', $subjects, $user['subjects'], "size=\"$subject_count\""); ?> 
-
-                <?php echo form_label('Meine Hobbies', 'fav_hobbies'); ?> 
+                <?php /* echo form_label('Frage', 'q1_q'); */ ?> 
+                <?php echo form_dropdown('q1_q', $questions, $user['questions'][1]['q']); ?> 
                 <?php echo form_textarea(array(
-                    'name' => 'fav_hobbies',
-                    'id' => 'fav_hobbies',
-                    'value' => $user['fav_hobbies'],
+                    'name' => 'q1_a',
+                    'id' => 'q1_a',
+                    'value' => $user['questions'][1]['a'],
                     'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '3',
+                    'maxlength' => '300'
                 )); ?> 
-
-                <?php echo form_label('Mein Kindheitsberufswunsch', 'fav_child_job'); ?> 
+                <br />
+                
+                <?php echo form_dropdown('q2_q', $questions, $user['questions'][2]['q']); ?> 
                 <?php echo form_textarea(array(
-                    'name' => 'fav_child_job',
-                    'id' => 'fav_child_job',
-                    'value' => $user['fav_child_job'],
+                    'name' => 'q2_a',
+                    'id' => 'q2_a',
+                    'value' => $user['questions'][2]['a'],
                     'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '3',
+                    'maxlength' => '300'
                 )); ?> 
-
-                <?php echo form_label('Mein Pl&auml;ne nach dem Abi', 'fav_occupation'); ?> 
+                <br />
+                
+                <?php echo form_dropdown('q3_q', $questions, $user['questions'][3]['q']); ?> 
                 <?php echo form_textarea(array(
-                    'name' => 'fav_occupation',
-                    'id' => 'fav_occupation',
-                    'value' => $user['fav_occupation'],
+                    'name' => 'q3_a',
+                    'id' => 'q3_a',
+                    'value' => $user['questions'][3]['a'],
                     'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '3',
+                    'maxlength' => '300'
                 )); ?> 
-
-                <?php echo form_label('Mein Lebensziel / Mein Berufswunsch', 'fav_lifegoal'); ?> 
+                <br />
+                
+                <?php echo form_dropdown('q4_q', $questions, $user['questions'][4]['q']); ?> 
                 <?php echo form_textarea(array(
-                    'name' => 'fav_lifegoal',
-                    'id' => 'fav_lifegoal',
-                    'value' => $user['fav_lifegoal'],
+                    'name' => 'q4_a',
+                    'id' => 'q4_a',
+                    'value' => $user['questions'][4]['a'],
                     'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '3',
+                    'maxlength' => '300'
                 )); ?> 
-
-                <?php echo form_label('Mein Lebensmotto / mein Lieblingszitat', 'fav_cite'); ?> 
+                <br />
+                
+                <?php echo form_dropdown('q5_q', $questions, $user['questions'][5]['q']); ?> 
                 <?php echo form_textarea(array(
-                    'name' => 'fav_cite',
-                    'id' => 'fav_cite',
-                    'value' => $user['fav_cite'],
+                    'name' => 'q5_a',
+                    'id' => 'q5_a',
+                    'value' => $user['questions'][5]['a'],
                     'cols' => '50',
-                    'rows' => '10',
-                    'maxlength' => '500'
-                )); ?> 
-
-                <?php echo form_label('Was mir von meiner Schulzeit in Erinnerung bleibt', 'mem_events'); ?> 
-                <?php echo form_textarea(array(
-                    'name' => 'mem_events',
-                    'id' => 'mem_events',
-                    'value' => $user['mem_events'],
-                    'cols' => '50',
-                    'rows' => '4',
-                    'maxlength' => '200'
+                    'rows' => '3',
+                    'maxlength' => '300'
                 )); ?> 
                 <br />
                 
@@ -104,7 +96,7 @@
             <link rel="stylesheet" href="<?php echo $this->config->base_url(); ?>assets/css/multiple-select.css">
             <script src="<?php echo $this->config->base_url(); ?>assets/js/jquery.min.js"></script>
             <script src="<?php echo $this->config->base_url(); ?>assets/js/jquery.multiple.select.js"></script>
-            <script>
+            <?php /* <script>
                 $("select").multipleSelect({
                     width: 270,
                     selectAll: false,
@@ -115,3 +107,4 @@
                 });
                 $(".ms-choice").width("270px");
             </script>
+			*/ ?>

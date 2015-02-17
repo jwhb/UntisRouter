@@ -79,10 +79,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fav_cite` varchar(200) DEFAULT NULL,
   `mem_events` varchar(200) DEFAULT NULL,
   `photo1_id` varchar(64) DEFAULT NULL,
-  `photo2_id` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  `photo2_id` varchar(64) DEFAULT NULL,
+  `q1_q` tinyint(4) NOT NULL,
+  `q1_a` text NOT NULL,
+  `q2_q` tinyint(4) NOT NULL,
+  `q2_a` text NOT NULL,
+  `q3_q` tinyint(4) NOT NULL,
+  `q3_a` text NOT NULL,
+  `q4_q` tinyint(4) NOT NULL,
+  `q4_a` text NOT NULL,
+  `q5_q` tinyint(4) NOT NULL,
+  `q5_a` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `photo1_id`, `photo2_id`) VALUES (1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', NULL, 'admin@admin.com', NULL, NULL, NULL, NULL, 0, 1, 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `fav_subjects`, `fav_hobbies`, `fav_child_job`, `fav_occupation`, `fav_lifegoal`, `fav_cite`, `mem_events`, `fav_abimotto`, `photo1_id`, `photo2_id`, `q1_q`, `q1_a`, `q2_q`, `q2_a`, `q3_q`, `q3_a`, `q4_q`, `q4_a`, `q5_q`, `q5_a`) VALUES
+(1, '::1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', NULL, 'admin@admin.com', NULL, NULL, NULL, 'ZWnOQJglbrFrgua.C6NL0.', 0, 1424174057, 1, 'Admin', 'Istrator', 'Sys', '0000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '', 0, '', 0, '', 0, '', 0, '');
 
 CREATE TABLE IF NOT EXISTS `users_comments` (
 `id` int(11) NOT NULL,

@@ -57,9 +57,10 @@ class Profile extends MY_Controller{
               }
               
               $ch = array();
-              $chk = function($ch, $user, $field){
+              $chk = function($ch, $user, $field, $user_val = null){
+              	  if($user_val === null) $user_val = $user[$field];
                   $new_val = $this->input->post($field);
-                  if($new_val !== false && $new_val != $user[$field]){
+                  if($new_val !== false && $new_val != $user_val){
                       $ch[$field] = $new_val;
                   }
                   return $ch;
@@ -68,12 +69,17 @@ class Profile extends MY_Controller{
               $ch = $chk($ch, $user, 'first_name');
               $ch = $chk($ch, $user, 'last_name');
               $ch = $chk($ch, $user, 'email');
-              $ch = $chk($ch, $user, 'fav_hobbies');
-              $ch = $chk($ch, $user, 'fav_child_job');
-              $ch = $chk($ch, $user, 'fav_occupation');
-              $ch = $chk($ch, $user, 'fav_lifegoal');
-              $ch = $chk($ch, $user, 'fav_cite');
-              $ch = $chk($ch, $user, 'mem_events');
+              $ch = $chk($ch, $user, 'q1_q', $user['questions'][1]['q']);
+              $ch = $chk($ch, $user, 'q1_a', $user['questions'][1]['a']);
+              $ch = $chk($ch, $user, 'q2_q', $user['questions'][2]['q']);
+              $ch = $chk($ch, $user, 'q2_a', $user['questions'][2]['a']);
+              $ch = $chk($ch, $user, 'q3_q', $user['questions'][3]['q']);
+              $ch = $chk($ch, $user, 'q3_a', $user['questions'][3]['a']);
+              $ch = $chk($ch, $user, 'q4_q', $user['questions'][4]['q']);
+              $ch = $chk($ch, $user, 'q4_a', $user['questions'][4]['a']);
+              $ch = $chk($ch, $user, 'q5_q', $user['questions'][5]['q']);
+              $ch = $chk($ch, $user, 'q5_a', $user['questions'][5]['a']);
+              
               if(sizeof($ch)){
                   $this->ion_auth_model->update($user['id'], $ch);
               }

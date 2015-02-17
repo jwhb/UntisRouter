@@ -44,6 +44,12 @@ $config['public_access_time'] = 3600 * 24 * 3;
 $config['update_token'] = 'Change me!';
 $config['tracking'] = '';
 
+$config['questions'] = array(
+	0 => '', // default question 
+	'Who am I?',
+	'Why am I here?'
+);
+
 setlocale(LC_ALL, 'de_DE', 'de_DE.utf8');
 
 /*
