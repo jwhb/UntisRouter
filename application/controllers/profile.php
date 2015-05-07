@@ -25,7 +25,7 @@ class Profile extends MY_Controller{
       $data['user'] = $this->get_user_data('', true);
       $data['foreign'] = ($name != $data['user']['username'] && strlen($name) != 0);
       $data['profile_user'] = $this->get_user_data($name, false, true);
-      $this->set_title('Profil: ' . $data['user']['first_name'] . ' ' . $data['user']['last_name']);
+      $this->set_title('Profil: ' . $data['profile_user']['first_name'] . ' ' . $data['profile_user']['last_name']);
 
       $tpl = ($edit)? 'profile/profile' : 'profile/foreign';
       if($edit && $data['foreign']) $tpl = 'profile/profile_readonly';
@@ -130,6 +130,7 @@ class Profile extends MY_Controller{
               );
           }
           $data['users'] = $users;
+          $data['is_mod'] = $this->ion_auth->is_admin();
 
           $this->set_title('Nutzerliste');
           $this->template->write_view('content', 'profile/user_list', $data);
