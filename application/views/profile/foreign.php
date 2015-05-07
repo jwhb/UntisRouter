@@ -1,7 +1,7 @@
         <?php 
-        $has_comments = (isset($other_user['comments']) && sizeof($other_user['comments']) != 0);
+        $has_comments = (isset($profile_user['comments']) && sizeof($profile_user['comments']) != 0);
         
-        if(!isset($other_user['first_name'])): ?>
+        if(!isset($profile_user['first_name'])): ?>
             <p>Der gew&uuml;nschte Benutzer wurde nicht gefunden.</p>
         <?php else:
             echo form_open('profile/add_comment', array('class' => 'pure-form pure-form-stacked user_comment_add_box')); ?> 
@@ -10,12 +10,12 @@
                 <?php echo form_textarea(array(
                     'name' => 'comment',
                     'id' => 'comment',
-                    'placeholder' => 'Welche Assoziationen fallen dir zu ' . $other_user['first_name'] . ' ein?',
+                    'placeholder' => 'Welche Assoziationen fallen dir zu ' . $profile_user['first_name'] . ' ein?',
                     'cols' => '50',
                     'rows' => '2',
                     'maxlength' => '400'
                 )); ?> 
-                <?php echo form_hidden('for_user', $other_user['id']); ?> 
+                <?php echo form_hidden('for_user', $profile_user['id']); ?> 
                 <div style="text-align: center;">
                     <?php echo form_submit(array('class' => 'pure-button pure-button-primary', 'name' => 'add-comment', 'value' => 'absenden' )); ?> 
                     <?php echo form_checkbox(array('name' => 'hidden', 'value' => 'hidden', 'style' => 'margin-left: 1em;')); ?> 
@@ -28,7 +28,7 @@
         <?php else: ?>       
         <hr style="margin-bottom: 2em;" />
         
-        <?php foreach($other_user['comments'] as $comment): ?>
+        <?php foreach($profile_user['comments'] as $comment): ?>
         <table class="pure-table pure-table-bordered user_comment_single">
           <tbody>
             <tr class="user_comment_single_header">

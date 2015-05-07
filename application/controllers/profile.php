@@ -13,35 +13,54 @@ class Profile extends MY_Controller{
       if(!$this->ion_auth->logged_in()){
           redirect('auth/login', 'refresh');
       } else {
-          $this->load->model('subjects_model', 'subjects');
-          $data['user'] = $this->get_user_data('', true);
-          $data['subjects'] = $this->subjects->get_subject_names();
-          $this->set_title('Profil: ' . $data['user']['first_name'] . ' ' . $data['user']['last_name']);
-
-          $this->template->write_view('content', 'profile/profile', $data);
-          $this->template->render();
+        redirect('profile/edit', 'refresh');
       }
   }
 
-  public function view($name = ''){
-      // other user's profile
-      if(!$this->ion_auth->logged_in()){
-          redirect('auth/login', 'refresh');
-      } elseif(!strlen($name)) {
-          // redirect to user profile
-          redirect('profile', 'refresh');
-      } else {
-          $data['user'] = $this->get_user_data();
-          $data['other_user'] = $this->get_user_data($name, false, true);
-          if(isset($data['other_user']['first_name'])){
-              $this->set_title('Profil: ' . $data['other_user']['first_name'] . ' ' . $data['other_user']['last_name']);
-          } else {
-              $this->set_title('Profil nicht gefunden');
-          }
+  private function view_profile($name, $edit){
+    // $edit: true=edit, false=view
+    if($this->ion_auth->is_admin() !== TRUE){
+      redirect('profile', 'refresh');
+    } else {
+      $data['user'] = $this->get_user_data('', true);
+      $data['foreign'] = ($name != $data['user']['username'] && strlen($name) != 0);
+      $data['profile_user'] = $this->get_user_data($name, false, true);
+      $this->set_title('Profil: ' . $data['user']['first_name'] . ' ' . $data['user']['last_name']);
 
-          $this->template->write_view('content', 'profile/foreign', $data);
-          $this->template->render();
+      $tpl = ($edit)? 'profile/profile' : 'profile/foreign';
+      if($edit && $data['foreign']) $tpl = 'profile/profile_readonly';
+
+      $this->template->write_view('content', $tpl, $data);
+      $this->template->render();
+    }
+  }
+
+  public function view($name = ''){
+    // other user's profile
+    if(!$this->ion_auth->logged_in()){
+      redirect('auth/login', 'refresh');
+    } elseif(!strlen($name)) {
+      // redirect to user's public profile
+      $user = $this->get_user_data('', true);
+      redirect('profile/view/' . $user['username'], 'refresh');
+    } else {
+      $this->view_profile($name, false);
+    }
+  }
+
+  public function edit($name = ''){
+    // other user's profile
+    if(!$this->ion_auth->logged_in()){
+      redirect('auth/login', 'refresh');
+    } else {
+      $user = $this->get_user_data('');
+      if($user['username'] == $name || !strlen($name) || $this->ion_auth->is_admin()){
+        $this->view_profile($name, true);
+      } else {
+        redirect('profile/edit', 'refresh');
       }
+    }
+
   }
 
   public function update(){

@@ -1,12 +1,12 @@
-            <?php $questions = $this->config->item('questions'); ?> 
-            <?php echo form_open('profile/update', array('class' => 'pure-form pure-form-stacked profile-form')); ?> 
+            <?php $questions = $this->config->item('questions'); ?>
+            <?php echo form_open((@$foreign)? '#' : 'profile/update', array('class' => 'pure-form pure-form-stacked profile-form')); ?>
               <?php echo form_fieldset(); ?> 
                 <?php echo form_label('E-Mail', 'email'); ?> 
                 <?php echo form_input(array(
                     'name' => 'email',
                     'placeholder' => 'username@example.org',
                     'id' => 'email',
-                    'value' => $user['email'],
+                    'value' => $profile_user['email'],
                     'pattern' => '[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}',
                     'title' => 'g&uuml;ltige E-Mail',
                     'required' => '1'
@@ -34,55 +34,55 @@
                 <br /><p>Fragebogen</p><hr />
 
                 <?php /* echo form_label('Frage', 'q1_q'); */ ?> 
-                <?php echo form_dropdown('q1_q', $questions, $user['questions'][1]['q']); ?> 
+                <?php echo form_dropdown('q1_q', $questions, $profile_user['questions'][1]['q']); ?> 
                 <?php echo form_textarea(array(
                     'name' => 'q1_a',
                     'id' => 'q1_a',
-                    'value' => $user['questions'][1]['a'],
+                    'value' => $profile_user['questions'][1]['a'],
                     'cols' => '50',
                     'rows' => '3',
                     'maxlength' => '300'
                 )); ?> 
                 <br />
                 
-                <?php echo form_dropdown('q2_q', $questions, $user['questions'][2]['q']); ?> 
+                <?php echo form_dropdown('q2_q', $questions, $profile_user['questions'][2]['q']); ?> 
                 <?php echo form_textarea(array(
                     'name' => 'q2_a',
                     'id' => 'q2_a',
-                    'value' => $user['questions'][2]['a'],
+                    'value' => $profile_user['questions'][2]['a'],
                     'cols' => '50',
                     'rows' => '3',
                     'maxlength' => '300'
                 )); ?> 
                 <br />
                 
-                <?php echo form_dropdown('q3_q', $questions, $user['questions'][3]['q']); ?> 
+                <?php echo form_dropdown('q3_q', $questions, $profile_user['questions'][3]['q']); ?> 
                 <?php echo form_textarea(array(
                     'name' => 'q3_a',
                     'id' => 'q3_a',
-                    'value' => $user['questions'][3]['a'],
+                    'value' => $profile_user['questions'][3]['a'],
                     'cols' => '50',
                     'rows' => '3',
                     'maxlength' => '300'
                 )); ?> 
                 <br />
                 
-                <?php echo form_dropdown('q4_q', $questions, $user['questions'][4]['q']); ?> 
+                <?php echo form_dropdown('q4_q', $questions, $profile_user['questions'][4]['q']); ?> 
                 <?php echo form_textarea(array(
                     'name' => 'q4_a',
                     'id' => 'q4_a',
-                    'value' => $user['questions'][4]['a'],
+                    'value' => $profile_user['questions'][4]['a'],
                     'cols' => '50',
                     'rows' => '3',
                     'maxlength' => '300'
                 )); ?> 
                 <br />
                 
-                <?php echo form_dropdown('q5_q', $questions, $user['questions'][5]['q']); ?> 
+                <?php echo form_dropdown('q5_q', $questions, $profile_user['questions'][5]['q']); ?> 
                 <?php echo form_textarea(array(
                     'name' => 'q5_a',
                     'id' => 'q5_a',
-                    'value' => $user['questions'][5]['a'],
+                    'value' => $profile_user['questions'][5]['a'],
                     'cols' => '50',
                     'rows' => '3',
                     'maxlength' => '300'
