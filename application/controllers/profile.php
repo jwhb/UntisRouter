@@ -19,20 +19,16 @@ class Profile extends MY_Controller{
 
   private function view_profile($name, $edit){
     // $edit: true=edit, false=view
-    if($this->ion_auth->is_admin() !== TRUE){
-      redirect('profile', 'refresh');
-    } else {
-      $data['user'] = $this->get_user_data('', true);
-      $data['foreign'] = ($name != $data['user']['username'] && strlen($name) != 0);
-      $data['profile_user'] = $this->get_user_data($name, false, true);
-      $this->set_title('Profil: ' . $data['profile_user']['first_name'] . ' ' . $data['profile_user']['last_name']);
+    $data['user'] = $this->get_user_data('', true);
+    $data['foreign'] = ($name != $data['user']['username'] && strlen($name) != 0);
+    $data['profile_user'] = $this->get_user_data($name, false, true);
+    $this->set_title('Profil: ' . $data['profile_user']['first_name'] . ' ' . $data['profile_user']['last_name']);
 
-      $tpl = ($edit)? 'profile/profile' : 'profile/foreign';
-      if($edit && $data['foreign']) $tpl = 'profile/profile_readonly';
+    $tpl = ($edit)? 'profile/profile' : 'profile/foreign';
+    if($edit && $data['foreign']) $tpl = 'profile/profile_readonly';
 
-      $this->template->write_view('content', $tpl, $data);
-      $this->template->render();
-    }
+    $this->template->write_view('content', $tpl, $data);
+    $this->template->render();
   }
 
   public function view($name = ''){
