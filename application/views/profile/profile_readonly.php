@@ -1,5 +1,5 @@
 <table border="1" cellpadding="5">
-  <?php foreach($user['questions'] as $question): ?><tr>
+  <?php foreach($profile_user['questions'] as $question): ?><tr>
     <td><?php echo (strlen($question['t']))? $question['t'] : '--' ?></td>
     <td><?php echo (strlen($question['a']))? $question['a'] : '--' ?></td>
   </tr>
