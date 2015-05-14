@@ -54,14 +54,7 @@ class MY_Controller extends CI_Controller {
             'email' => $user->email,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
-
-            'fav_subjects' => $user->fav_subjects,
-            'fav_hobbies' => $user->fav_hobbies,
-            'fav_child_job' => $user->fav_child_job,
-            'fav_occupation' => $user->fav_occupation,
-            'fav_lifegoal' => $user->fav_lifegoal,
-            'fav_cite' => $user->fav_cite,
-            'mem_events' => $user->mem_events,
+            
             'photo1_id' => $user->photo1_id,
             'photo2_id' => $user->photo2_id,
             'photo1_url' => (strlen($user->photo1_id))? $this->get_photo_url($user->photo1_id) : false,
