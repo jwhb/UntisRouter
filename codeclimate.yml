@@ -1,0 +1,6 @@
+languages:
+  JavaScript: true
+  PHP: true
+  Ruby: false
+exclude_paths:
+- "system/*"
